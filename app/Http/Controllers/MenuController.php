@@ -131,6 +131,7 @@ class MenuController extends Controller
         // Retrieve token and base URL, with a check for token presence
         $token = Session::get('token');
         $baseURL = env('API_BASE_URL');
+
         if (!$token) {
             return response()->json(['message' => 'Authorization token not found'], 401);
         }
@@ -179,10 +180,10 @@ class MenuController extends Controller
                 'full_response' => $response->body()
             ]);
 
+            // Send only one error message with the response
             return redirect()->back()->with([
-                'error' => 'Failed to update menu item',
-                'error' => $response->json()
-            ], $response->status());
+                'error' => $response->json()['message'] ?? 'Failed to update menu item',
+            ]);
         }
     }
 
