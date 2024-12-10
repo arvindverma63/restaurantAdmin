@@ -127,6 +127,7 @@ class MenuController extends Controller
 
     public function updateMenuItem(Request $request, $id)
     {
+
         // Retrieve token and base URL, with a check for token presence
         $token = Session::get('token');
         $baseURL = env('API_BASE_URL');
@@ -141,6 +142,7 @@ class MenuController extends Controller
             'price' => 'required|numeric|min:0',
             'itemImage' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
 
         // Prepare data for the PUT request
         $data = [

@@ -193,6 +193,7 @@ public function menu()
     }
 
     public function dailyReportTable(ReportController $reportController){
+
         return view('Reports.todayReport',['data'=>$reportController->dailyReport()->json()]);
     }
 
