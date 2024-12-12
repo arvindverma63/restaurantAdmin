@@ -127,7 +127,6 @@ class MenuController extends Controller
 
     public function updateMenuItem(Request $request, $id)
     {
-
         // Retrieve token and base URL, with a check for token presence
         $token = Session::get('token');
         $baseURL = env('API_BASE_URL');
@@ -144,7 +143,6 @@ class MenuController extends Controller
             'itemImage' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-
         // Prepare data for the PUT request
         $data = [
             'itemName' => $validatedData['itemName'],
@@ -152,39 +150,51 @@ class MenuController extends Controller
             'price' => $validatedData['price'],
         ];
 
-        // Check if an image is being uploaded
-        if ($request->hasFile('itemImage')) {
+        try {
+            $response = $this->sendUpdateRequest($baseURL, $id, $data, $request->file('itemImage'), $token);
 
-            $imagePath = $request->file('itemImage')->getRealPath();
-            $imageName = $request->file('itemImage')->getClientOriginalName();
+            // Check if the response was successful
+            if ($response->successful()) {
+                return redirect()->back()->with(['success' => 'Menu item updated successfully.']);
+            } else {
+                Log::error('Failed to update menu item:', [
+                    'status' => $response->status(),
+                    'response' => $response->json(),
+                    'full_response' => $response->body(),
+                ]);
 
-            $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . $token,
-            ])->attach('itemImage', file_get_contents($imagePath), $imageName)
-                ->put("{$baseURL}/menu/{$id}", $data);
-        } else {
-            // Send the PUT request without the image
-            $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . $token,
-            ])->put("{$baseURL}/menu/{$id}", $data);
+                return redirect()->back()->with([
+                    'error' => $response->json()['message'] ?? 'Failed to update menu item',
+                ]);
+            }
+        } catch (\Exception $e) {
+            Log::error('Exception during menu update:', ['error' => $e->getMessage()]);
+            return redirect()->back()->with(['error' => 'An unexpected error occurred. Please try again.']);
+        }
+    }
+
+    /**
+     * Send the PUT request to update the menu item.
+     *
+     * @param string $baseURL
+     * @param int $id
+     * @param array $data
+     * @param UploadedFile|null $image
+     * @param string $token
+     * @return \Illuminate\Http\Client\Response
+     */
+    private function sendUpdateRequest($baseURL, $id, $data, $image = null, $token)
+    {
+        $request = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ]);
+
+        // Attach image if provided
+        if ($image) {
+            $request->attach('itemImage', file_get_contents($image->getRealPath()), $image->getClientOriginalName());
         }
 
-        // Check if the response was successful
-        if ($response->successful()) {
-            return redirect()->back()->with(['success' => 'Menu item updated successfully.']);
-        } else {
-            // Log the error for debugging
-            Log::error('Failed to update menu item:', [
-                'status' => $response->status(),
-                'response' => $response->json(),
-                'full_response' => $response->body()
-            ]);
-
-            // Send only one error message with the response
-            return redirect()->back()->with([
-                'error' => $response->json()['message'] ?? 'Failed to update menu item',
-            ]);
-        }
+        return $request->put("{$baseURL}/menu/{$id}", $data);
     }
 
     public function updateMenuStock(Request $request, $id)
