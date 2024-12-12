@@ -155,10 +155,12 @@ class MenuController extends Controller
         // Check if an image is being uploaded
         if ($request->hasFile('itemImage')) {
 
-            // Send the PUT request with the attached image
+            $imagePath = $request->file('itemImage')->getRealPath();
+            $imageName = $request->file('itemImage')->getClientOriginalName();
+
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $token,
-            ])->attach('itemImage', $validatedData['itemImage'])
+            ])->attach('itemImage', file_get_contents($imagePath), $imageName)
                 ->put("{$baseURL}/menu/{$id}", $data);
         } else {
             // Send the PUT request without the image
