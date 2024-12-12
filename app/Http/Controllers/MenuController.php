@@ -143,6 +143,9 @@ class MenuController extends Controller
             'itemImage' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+
+        Log::info('validated request',$validatedData);
+
         // Prepare data for the PUT request
         $data = [
             'itemName' => $validatedData['itemName'],
