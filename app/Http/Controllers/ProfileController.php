@@ -20,11 +20,11 @@ class ProfileController extends Controller
         if (!$token) {
             return redirect()->route('login')->withErrors(['message' => 'Token not found or expired. Please log in again.']);
         }
-
         $baseUrl = env('API_BASE_URL');
+
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $token,
-        ])->get($baseUrl . '/rest-profile/' . $restaurantId);
+            ])->get($baseUrl . '/rest-profile/' . $restaurantId);
 
 
         if ($response->successful()) {
@@ -36,6 +36,7 @@ class ProfileController extends Controller
     }
 
     public function update($id, Request $request){
+
 
         $validate = $request->validate([
             'firstName' => 'nullable|string|max:255',
@@ -51,6 +52,7 @@ class ProfileController extends Controller
             'identityNumber' => 'nullable|string|max:255',
             'email' => 'nullable|email|max:255',
         ]);
+
 
 
         $restaurantId = Session::get('restaurant_id');
@@ -77,12 +79,14 @@ class ProfileController extends Controller
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $httpRequest->attach(
                 'image',
-                file_get_contents($request->file('image')),
+                $request->file('image')->get(),
                 $request->file('image')->getClientOriginalName()
             );
         }
 
         $response = $httpRequest->put($baseURL . '/profile/'.$id  , $validate);
+
+
 
         if ($response->successful()) {
 
