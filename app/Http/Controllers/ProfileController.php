@@ -16,7 +16,7 @@ class ProfileController extends Controller
     {
         $token = Session::get('token');
         $restaurantId = Session::get('restaurant_id');
-        dd($restaurantId);
+
         if (!$token) {
             return redirect()->route('login')->withErrors(['message' => 'Token not found or expired. Please log in again.']);
         }
@@ -58,8 +58,6 @@ class ProfileController extends Controller
 
         $validate['restaurantId'] = $restaurantId;
 
-        dd($restaurantId);
-        $validate['email'] = "suraj2002fake@gmail.com";
 
         if (!$restaurantId) {
             return response()->json(['error' => 'Restaurant ID not found in Session.'], 404);
@@ -85,9 +83,7 @@ class ProfileController extends Controller
         }
 
         $response = $httpRequest->put($baseURL . '/profile/'.$id  , $validate);
-        dd($response->status(), $response->body());
 
-        dd($response->json(), $response);
         if ($response->successful()) {
 
 
