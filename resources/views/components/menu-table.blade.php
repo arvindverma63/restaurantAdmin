@@ -112,6 +112,7 @@
                                     if (itemImage) {
                                         formData.append('itemImage', itemImage);
                                     }
+                                    console.log(formData);
 
                                     // Send PUT request using Fetch API
                                     fetch(`${baseUrl}/menu/${itemId}`, {
