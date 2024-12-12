@@ -103,7 +103,7 @@
                                     var itemId = document.getElementById('itemId').value;
                                     var token = document.getElementById('token').value;
                                     var baseUrl = document.getElementById('baseUrl').value;
-                                    console.log(token);
+                                    console.log(itemName);
                                     // Create FormData object
                                     var formData = new FormData();
                                     formData.append('itemName', itemName);
