@@ -51,48 +51,93 @@
                                 <h5 class="modal-title" id="editMenuLabel{{ $menuItem['id'] }}">Edit Menu Item: {{ $menuItem['itemName'] }}</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <form action="{{ url('/menu', $menuItem['id']) }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                @method('PUT')
+                            <form method="POST" enctype="multipart/form-data">
                                 <div class="modal-body">
-                                    <!-- Item Name Field -->
+                                    <input type="hidden" value="{{ $menuItem['id'] }}" id="itemId">
+                                    <input type="hidden" value="{{ Session::get('token') }}" id="token">
+                                    <input type="hidden" value="{{ env('API_BASE_URL') }}" id="baseUrl">
+
                                     <div class="mb-3">
                                         <label for="itemName" class="form-label">Item Name</label>
-                                        <input type="text" class="form-control" id="itemName" name="itemName" value="{{ $menuItem['itemName'] }}" required>
+                                        <input type="text" class="form-control" id="edititemName" name="itemName" value="{{ $menuItem['itemName'] }}" required>
                                     </div>
 
-                                    <!-- Category Dropdown -->
                                     <div class="mb-3">
                                         <label for="categoryId" class="form-label">Category</label>
-                                        <select class="form-select" id="categorySelect{{ $menuItem['id'] }}" name="categoryId" required>
+                                        <select class="form-select" id="categorySelect" name="categoryId" required>
                                             <option value="">Select Category</option>
                                         </select>
                                     </div>
 
-                                    <!-- Price Field -->
                                     <div class="mb-3">
                                         <label for="price" class="form-label">Price</label>
-                                        <input type="number" step="0.01" class="form-control" id="price" name="price" value="{{ $menuItem['price'] }}" required>
+                                        <input type="number" step="0.01" class="form-control" id="editprice" name="price" value="{{ $menuItem['price'] }}" required>
                                     </div>
 
-
-                                    <!-- Item Image Field -->
                                     <div class="mb-3">
                                         <label for="itemImage" class="form-label">Item Image</label>
-                                        <input type="file" class="form-control" id="itemImage" name="itemImage" accept="image/jpeg, image/png, image/jpg, image/gif">
+                                        <input type="file" class="form-control" id="edititemImage" name="itemImage" accept="image/jpeg, image/png, image/jpg, image/gif">
                                         @if($menuItem['itemImage'])
-                                            <div class="mt-2">
-                                                <img src="{{ $menuItem['itemImage'] }}" alt="Current Image" style="width: 100px; height: auto;">
-                                                <p class="text-muted">Current image</p>
-                                            </div>
+                                        <div class="mt-2">
+                                            <img src="{{ $menuItem['itemImage'] }}" alt="Current Image" style="width: 100px; height: auto;">
+                                            <p class="text-muted">Current image</p>
+                                        </div>
                                         @endif
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    <button type="button" id="editsubmit" class="btn btn-primary">Save Changes</button>
                                 </div>
                             </form>
+
+                            <script>
+                                document.getElementById('editsubmit').addEventListener('click', function (event) {
+                                    event.preventDefault(); // Prevent default form submission
+
+                                    // Collect input values
+                                    var itemName = document.getElementById('edititemName').value;
+                                    var price = document.getElementById('editprice').value;
+                                    var categoryId = document.getElementById('categorySelect').value;
+                                    var itemImage = document.getElementById('edititemImage').files[0];
+                                    var itemId = document.getElementById('itemId').value;
+                                    var token = document.getElementById('token').value;
+                                    var baseUrl = document.getElementById('baseUrl').value;
+
+                                    // Create FormData object
+                                    var formData = new FormData();
+                                    formData.append('itemName', itemName);
+                                    formData.append('price', price);
+                                    formData.append('categoryId', categoryId);
+                                    if (itemImage) {
+                                        formData.append('itemImage', itemImage);
+                                    }
+
+                                    // Send PUT request using Fetch API
+                                    fetch(`${baseUrl}/menu/${itemId}`, {
+                                        method: 'PUT',
+                                        body: formData,
+                                        headers: {
+                                            'Authorization': `Bearer ${token}`, // Add space after 'Bearer'
+                                        },
+                                    })
+                                        .then(response => {
+                                            if (!response.ok) {
+                                                throw new Error('Network response was not ok');
+                                            }
+                                            return response.json();
+                                        })
+                                        .then(data => {
+                                            console.log('Success:', data);
+                                            alert('Menu item updated successfully!');
+                                        })
+                                        .catch(error => {
+                                            console.error('Error:', error);
+                                            alert('Failed to update menu item.');
+                                        });
+                                });
+                            </script>
+
                         </div>
                     </div>
                 </div>
