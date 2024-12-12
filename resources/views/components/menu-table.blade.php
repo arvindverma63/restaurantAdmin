@@ -122,10 +122,10 @@
                                     var baseUrl = document.getElementById('baseUrl').value;
 
                                     // Ensure categoryId is valid
-                                    if (!categoryId) {
-                                        alert('Please select a category.');
-                                        return;
-                                    }
+                                    // if (!categoryId) {
+                                    //     alert('Please select a category.');
+                                    //     return;
+                                    // }
 
                                     // Create FormData object
                                     var formData = new FormData();
