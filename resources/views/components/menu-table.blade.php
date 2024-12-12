@@ -137,6 +137,7 @@
                                     }
 
                                     // Send PUT request using Fetch API
+                                    console.log('sending ....')
                                     fetch(`${baseUrl}/menu/${itemId}`, {
                                             method: 'PUT',
                                             body: formData,
