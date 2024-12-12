@@ -9,6 +9,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QrController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SessionController;
@@ -42,13 +43,14 @@ Route::middleware(['auth.token'])->group(function () {
     Route::get('/getAuth',[AuthController::class,'getAuth']);
 
     Route::get('/menu', [PageController::class, 'menu'])->name('menu');
-    Route::get('/account', [PageController::class, 'account'])->name('account');
     Route::get('/category', [PageController::class, 'category'])->name('category');
     Route::get('/order', [PageController::class, 'order'])->name('order');
     Route::get('/notification', [PageController::class, 'notification'])->name('notification');
     Route::get('/setting', [PageController::class, 'setting'])->name('setting');
     Route::get('/supplier', [PageController::class, 'supplier'])->name('supplier');
 
+    Route::get('/account', [ProfileController::class, 'account'])->name('account');
+    Route::put('/profile/{id}', [ProfileController::class, 'update'])->name('update.profile');
 
     Route::post('/add/category', [CategoryController::class, 'addCategory'])->name('addCategory');
     Route::put('/category/{id}', [CategoryController::class, 'editCategory'])->name('edit.category');

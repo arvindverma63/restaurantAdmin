@@ -7,94 +7,94 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
-    public function account(){
-        return view('account');
-    }
+
     public function category()
-{
-    // Retrieve the token and restaurantId from the Session
-    $token = Session::get('token');
-    $restaurantId = Session::get('restaurant_id');
+    {
+        // Retrieve the token and restaurantId from the Session
+        $token = Session::get('token');
+        $restaurantId = Session::get('restaurant_id');
 
-    // Check if token is available
-    if (!$token) {
-        return redirect()->route('login')->withErrors(['message' => 'Token not found or expired. Please log in again.']);
+        // Check if token is available
+        if (!$token) {
+            return redirect()->route('login')->withErrors(['message' => 'Token not found or expired. Please log in again.']);
+        }
+
+        // Fetch API base URL from the environment configuration
+        $baseUrl = env('API_BASE_URL');
+
+        // Make the GET request to fetch categories
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])->get($baseUrl . '/categories?restaurantId=' . $restaurantId);
+
+        // Check if the API request was successful
+        if ($response->successful()) {
+            // Extract the 'data' array from the response
+            $categories = $response->json('data');
+
+            // Pass all categories to the view (no pagination)
+            return view('category', ['categories' => $categories, 'message' => $response->json('message')]);
+        } else {
+            // Handle the case when the API request fails (e.g., invalid token or API error)
+            return redirect()->back()->withErrors(['error' => 'Failed to retrieve categories.']);
+        }
     }
 
-    // Fetch API base URL from the environment configuration
-    $baseUrl = env('API_BASE_URL');
 
-    // Make the GET request to fetch categories
-    $response = Http::withHeaders([
-        'Authorization' => 'Bearer ' . $token,
-    ])->get($baseUrl . '/categories?restaurantId=' . $restaurantId);
 
-    // Check if the API request was successful
-    if ($response->successful()) {
-        // Extract the 'data' array from the response
-        $categories = $response->json('data');
 
-        // Pass all categories to the view (no pagination)
-        return view('category', ['categories' => $categories,'message'=>$response->json('message')]);
-    } else {
-        // Handle the case when the API request fails (e.g., invalid token or API error)
-        return redirect()->back()->withErrors(['error' => 'Failed to retrieve categories.']);
+    public function menu()
+    {
+        $token = Session::get('token');
+        $restaurantId = Session::get('restaurant_id');
+
+        // Check if token is available
+        if (!$token) {
+            return redirect()->route('login')->withErrors(['message' => 'Token not found or expired. Please log in again.']);
+        }
+
+        // Fetch API base URL from the environment configuration
+        $baseUrl = env('API_BASE_URL');
+
+        // Make the GET request to fetch menu items
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])->get($baseUrl . '/menu?restaurantId=' . $restaurantId);
+
+        // Check if the API request was successful
+        if ($response->successful()) {
+            // Extract the 'data' array from the response
+            $data = $response->json('data');
+
+            // Check if 'menus' and 'inventoryOptions' exist in the response data
+            $menus = isset($data['menus']) ? $data['menus'] : [];
+            $inventoryOptions = isset($data['inventoryOptions']) ? $data['inventoryOptions'] : [];
+
+            // Pass menus and inventory options directly to the view without pagination
+            return view('menu', [
+                'menuItems' => [
+                    'data' => [
+                        'menus' => $menus,  // Directly passing the menus array
+                        'inventoryOptions' => $inventoryOptions
+                    ],
+                    'message' => 'Menus and inventory options retrieved successfully.'
+                ]
+            ]);
+        } else {
+            // Handle the case when the API request fails
+            return redirect()->back()->withErrors(['error' => 'Failed to retrieve menu items.']);
+        }
     }
-}
 
 
 
 
-public function menu()
-{
-    $token = Session::get('token');
-    $restaurantId = Session::get('restaurant_id');
-
-    // Check if token is available
-    if (!$token) {
-        return redirect()->route('login')->withErrors(['message' => 'Token not found or expired. Please log in again.']);
-    }
-
-    // Fetch API base URL from the environment configuration
-    $baseUrl = env('API_BASE_URL');
-
-    // Make the GET request to fetch menu items
-    $response = Http::withHeaders([
-        'Authorization' => 'Bearer ' . $token,
-    ])->get($baseUrl . '/menu?restaurantId=' . $restaurantId);
-
-    // Check if the API request was successful
-    if ($response->successful()) {
-        // Extract the 'data' array from the response
-        $data = $response->json('data');
-
-        // Check if 'menus' and 'inventoryOptions' exist in the response data
-        $menus = isset($data['menus']) ? $data['menus'] : [];
-        $inventoryOptions = isset($data['inventoryOptions']) ? $data['inventoryOptions'] : [];
-
-        // Pass menus and inventory options directly to the view without pagination
-        return view('menu', [
-            'menuItems' => [
-                'data' => [
-                    'menus' => $menus,  // Directly passing the menus array
-                    'inventoryOptions' => $inventoryOptions
-                ],
-                'message' => 'Menus and inventory options retrieved successfully.'
-            ]
-        ]);
-    } else {
-        // Handle the case when the API request fails
-        return redirect()->back()->withErrors(['error' => 'Failed to retrieve menu items.']);
-    }
-}
-
-
-
-
-    public function order(){
+    public function order()
+    {
         $token = Session::get('token');
         $restaurantId = Session::get('restaurant_id');
         $app_url = env('API_BASE_URL');
@@ -114,22 +114,27 @@ public function menu()
         // Check if the API response is successful
         if ($response->successful()) {
             $orders = $response->json('data');  // Get the 'data' array from the response
+
             return view('order', ['orders' => $orders]);
         } else {
             // Handle error responses
             return redirect()->back()->withErrors(['error' => 'Failed to retrieve orders.']);
         }
     }
-    public function notification(){
+    public function notification()
+    {
         return view('notification');
     }
-    public function setting(){
+    public function setting()
+    {
         return view('setting');
     }
-    public function login(){
+    public function login()
+    {
         return view('login');
     }
-    public function verifyOtp(){
+    public function verifyOtp()
+    {
         return view('verify-otp');
     }
     public function supplier()
@@ -160,7 +165,8 @@ public function menu()
         }
     }
 
-    public function stock(){
+    public function stock()
+    {
         $token = Session::get('token');
         $restaurantId = Session::get('restaurant_id');
         $appUrl = env('API_BASE_URL');  // Ensure you have the base URL defined in your .env file
@@ -187,14 +193,15 @@ public function menu()
         }
     }
 
-    public function till(Request $request){
+    public function till(Request $request)
+    {
         $id = $request->tableNumber;
-        return view('till',['tableNumber'=>$id]);
+        return view('till', ['tableNumber' => $id]);
     }
 
-    public function dailyReportTable(ReportController $reportController){
+    public function dailyReportTable(ReportController $reportController)
+    {
 
-        return view('Reports.todayReport',['data'=>$reportController->dailyReport()->json()]);
+        return view('Reports.todayReport', ['data' => $reportController->dailyReport()->json()]);
     }
-
 }

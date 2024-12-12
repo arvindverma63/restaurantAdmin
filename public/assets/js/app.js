@@ -15,28 +15,28 @@ const alerts = [...alertList].map(element => new bootstrap.Alert(element))
 
 
 /* ===== Responsive Sidepanel ====== */
-const sidePanelToggler = document.getElementById('sidepanel-toggler'); 
-const sidePanel = document.getElementById('app-sidepanel');  
-const sidePanelDrop = document.getElementById('sidepanel-drop'); 
-const sidePanelClose = document.getElementById('sidepanel-close'); 
+const sidePanelToggler = document.getElementById('sidepanel-toggler');
+const sidePanel = document.getElementById('app-sidepanel');
+const sidePanelDrop = document.getElementById('sidepanel-drop');
+const sidePanelClose = document.getElementById('sidepanel-close');
 
 window.addEventListener('load', function(){
-	responsiveSidePanel(); 
+	responsiveSidePanel();
 });
 
 window.addEventListener('resize', function(){
-	responsiveSidePanel(); 
+	responsiveSidePanel();
 });
 
 
 function responsiveSidePanel() {
     let w = window.innerWidth;
 	if(w >= 1200) {
-	    // if larger 
+	    // if larger
 	    //console.log('larger');
 		sidePanel.classList.remove('sidepanel-hidden');
 		sidePanel.classList.add('sidepanel-visible');
-		
+
 	} else {
 	    // if smaller
 	    //console.log('smaller');
@@ -50,7 +50,7 @@ sidePanelToggler.addEventListener('click', () => {
 		console.log('visible');
 		sidePanel.classList.remove('sidepanel-visible');
 		sidePanel.classList.add('sidepanel-hidden');
-		
+
 	} else {
 		console.log('hidden');
 		sidePanel.classList.remove('sidepanel-hidden');
@@ -78,9 +78,9 @@ const searchBox = document.querySelector('.app-search-box');
 searchMobileTrigger.addEventListener('click', () => {
 
 	searchBox.classList.toggle('is-visible');
-	
+
 	let searchMobileTriggerIcon = document.querySelector('.search-mobile-trigger-icon');
-	
+
 	if(searchMobileTriggerIcon.classList.contains('fa-magnifying-glass')) {
 		searchMobileTriggerIcon.classList.remove('fa-magnifying-glass');
 		searchMobileTriggerIcon.classList.add('fa-xmark');
@@ -88,9 +88,31 @@ searchMobileTrigger.addEventListener('click', () => {
 		searchMobileTriggerIcon.classList.remove('fa-xmark');
 		searchMobileTriggerIcon.classList.add('fa-magnifying-glass');
 	}
-	
-		
-	
+
+
+
 });
 
 
+document.querySelectorAll('.time-forward').forEach(element => {
+    const timeStr = element.getAttribute('data-time');
+    if(timeStr){
+        const givenTime = new Date(timeStr);
+
+        timerForward(givenTime, element);
+
+        setInterval(()=>{ timerForward(givenTime, element) }, 1000);
+    }
+});
+
+function timerForward(givenTime, elementToSetTime){
+    const now = new Date();
+    const timeDiff = now - givenTime;
+
+    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDiff / (1000 * 60 * 60)) % 24).toString().padStart(2, '0');
+    const minutes = Math.floor((timeDiff / (1000 * 60)) % 60).toString().padStart(2, '0');
+    const seconds = Math.floor((timeDiff / 1000) % 60).toString().padStart(2, '0');
+
+    elementToSetTime.innerHTML = ` ${hours}:${minutes}:${seconds} `;
+}

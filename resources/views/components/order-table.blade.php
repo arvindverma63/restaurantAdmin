@@ -44,9 +44,23 @@
                                     <td class="cell">{{ $order['table_number'] }}</td>
                                     <td class="cell">{{ \Carbon\Carbon::parse($order['created_at'])->format('d M Y') }}</td>
                                     <td class="cell">
-                                        <span class="badge {{ $order['status'] == 'processing' ? 'bg-warning' : ($order['status'] == 'complete' ? 'bg-success' : 'bg-danger') }}">
+
+                                        @if($order['status'] == 'complete')
+                                            <span class="badge bg-success">
+                                                {{ ucfirst($order['status']) }}
+                                            </span>
+                                        @elseif($order['status'] == 'processing')
+                                            <span class="badge bg-warning processing-badge time-forward" data-time="{{ $order['created_at'] }}">
+                                                <div class="spinner-border text-dark" role="status">
+                                                    <span class="visually-hidden">Loading...</span>
+                                                  </div>
+                                            </span>
+                                        @else
+                                        <span class="badge bg-danger">
                                             {{ ucfirst($order['status']) }}
                                         </span>
+                                        @endif
+
                                     </td>
                                     <td class="cell">₹{{ number_format($order['total'], 2) }}</td>
                                     <td class="cell">
