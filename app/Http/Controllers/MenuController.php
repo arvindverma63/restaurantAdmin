@@ -197,7 +197,7 @@ class MenuController extends Controller
             $request->attach('itemImage', file_get_contents($image->getRealPath()), $image->getClientOriginalName());
         }
 
-        return $request->put("{$baseURL}/menu/{$id}", $data);
+        return $request->put("{$baseURL}/menu/update/{$id}", $data);
     }
 
     public function updateMenuStock(Request $request, $id)
