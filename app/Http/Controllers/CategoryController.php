@@ -64,6 +64,8 @@ class CategoryController extends Controller
         'restaurantId' => $restaurantId
     ];
 
+    Log::info('category update request: ',$request);
+
     // Check if an image is being uploaded
     if ($request->hasFile('categoryImage')) {
         $imagePath = $request->file('categoryImage')->getRealPath();
