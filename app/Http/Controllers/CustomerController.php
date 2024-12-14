@@ -117,8 +117,8 @@ class CustomerController extends Controller
             'Authorization'=>'Bearer'.$token,
         ])->delete($baseUrl.'/customer/'.$id);
 
-        if($response){
-            return redirect()->back()-with('success', 'Category updated successfully.');
+        if($response->successful()){
+            return redirect()->back()->with('success', 'customer deleted successfully.');
         }
         else{
             return redirect()->back()->with('error','failed to delete');
