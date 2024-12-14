@@ -19,24 +19,24 @@
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-secondary" type="button">Online</button>
                         </div>
-                        <input type="number" class="form-control" placeholder="Type Percentage" id="online-split"
-                            value="0" min="0" max="100">
+                        <input type="text" class="form-control" placeholder="Type Percentage" aria-label="Online Percentage"
+                            id="online-split">
                     </div>
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-secondary" type="button">Cash</button>
                         </div>
-                        <input type="number" class="form-control" placeholder="Type Percentage" id="cash-split"
-                            value="100" min="0" max="100">
+                        <input type="text" class="form-control" placeholder="Type Percentage" aria-label="Cash Percentage"
+                            id="cash-split">
                     </div>
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-secondary" type="button">Due</button>
                         </div>
-                        <input type="number" class="form-control" placeholder="Type Percentage" id="due-split"
-                            value="0" min="0" max="100">
+                        <input type="text" class="form-control" placeholder="Type Percentage" aria-label="Due Percentage"
+                            id="due-split">
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
 </div>
 
 <script>
-    // Handle split-container visibility
+    // Handle the visibility of the split-container
     document.getElementById('type').addEventListener('change', function() {
         const splitContainer = document.getElementById('split-container');
         if (this.value === 'split') {
@@ -58,37 +58,5 @@
         } else {
             splitContainer.style.display = 'none';
         }
-    });
-
-    // Input elements for split
-    const onlineInput = document.getElementById('online-split');
-    const cashInput = document.getElementById('cash-split');
-    const dueInput = document.getElementById('due-split');
-
-    // Function to calculate the remaining percentage
-    function updateSplitValues(changedInput, otherInput1, otherInput2) {
-        const total = 100;
-        const changedValue = parseInt(changedInput.value) || 0;
-
-        // Calculate the remaining percentage
-        const remaining = total - changedValue;
-        const halfRemaining = Math.max(0, Math.floor(remaining / 2));
-
-        // Update other inputs
-        otherInput1.value = halfRemaining;
-        otherInput2.value = remaining - halfRemaining;
-    }
-
-    // Event listeners for changes
-    onlineInput.addEventListener('input', function() {
-        updateSplitValues(onlineInput, cashInput, dueInput);
-    });
-
-    cashInput.addEventListener('input', function() {
-        updateSplitValues(cashInput, onlineInput, dueInput);
-    });
-
-    dueInput.addEventListener('input', function() {
-        updateSplitValues(dueInput, onlineInput, cashInput);
     });
 </script>
