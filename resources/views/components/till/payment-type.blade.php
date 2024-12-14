@@ -14,32 +14,33 @@
                     <option value="card">card</option>
                     <option value="split">Split</option>
                 </select>
-            </div>
-            <div id="split-container">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <button class="btn btn-outline-secondary" type="button">Online</button>
-                </div>
-                <input type="text" class="form-control" placeholder="" aria-label=""
-                    aria-describedby="basic-addon1" id="online-split">
+                <div id="split-container">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary" type="button">Online</button>
+                        </div>
+                        <input type="text" class="form-control" placeholder="" aria-label=""
+                            aria-describedby="basic-addon1" id="online-split">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary" type="button">Cash</button>
+                        </div>
+                        <input type="text" class="form-control" placeholder="" aria-label=""
+                            aria-describedby="basic-addon1" id="cash-split">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary" type="button">Due</button>
+                        </div>
+                        <input type="text" class="form-control" placeholder="" aria-label=""
+                            aria-describedby="basic-addon1" id="due-split">
+                    </div>
+                    </div>
             </div>
 
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <button class="btn btn-outline-secondary" type="button">Cash</button>
-                </div>
-                <input type="text" class="form-control" placeholder="" aria-label=""
-                    aria-describedby="basic-addon1" id="cash-split">
-            </div>
-
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <button class="btn btn-outline-secondary" type="button">Due</button>
-                </div>
-                <input type="text" class="form-control" placeholder="" aria-label=""
-                    aria-describedby="basic-addon1" id="due-split">
-            </div>
-            </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
