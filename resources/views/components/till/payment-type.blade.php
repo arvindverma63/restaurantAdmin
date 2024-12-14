@@ -17,7 +17,7 @@
                 <div id="split-container" style="margin-top: 10px; display: none;">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <button class="btn btn-outline-secondary" type="button">Online</button>
+                            <label>Online</label>
                         </div>
                         <input type="text" class="form-control" placeholder="Type Percentage" aria-label="Online Percentage"
                             id="online-split">
@@ -25,7 +25,7 @@
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <button class="btn btn-outline-secondary" type="button">Cash</button>
+                            <label>Cash</label>
                         </div>
                         <input type="text" class="form-control" placeholder="Type Percentage" aria-label="Cash Percentage"
                             id="cash-split">
@@ -33,7 +33,7 @@
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <button class="btn btn-outline-secondary" type="button">Due</button>
+                            <label>Due</label>
                         </div>
                         <input type="text" class="form-control" placeholder="Type Percentage" aria-label="Due Percentage"
                             id="due-split">
