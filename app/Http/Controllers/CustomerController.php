@@ -118,10 +118,10 @@ class CustomerController extends Controller
         ])->delete($baseUrl.'/customer/'.$id);
 
         if($response){
-            return redirect()->back()->with(['message'=>'delete successfully']);
+            return redirect()->back()-with('success', 'Category updated successfully.');
         }
         else{
-            return redirect()->back()->with(['error'=>'failed to delete']);
+            return redirect()->back()->with('error','failed to delete');
         }
     }
 }
