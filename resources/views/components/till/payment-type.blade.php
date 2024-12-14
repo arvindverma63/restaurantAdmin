@@ -14,7 +14,7 @@
                     <option value="card">card</option>
                     <option value="split">Split</option>
                 </select>
-                <div id="split-container">
+                <div id="split-container p-3">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <button class="btn btn-outline-secondary" type="button">Online</button>
