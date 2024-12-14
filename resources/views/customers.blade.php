@@ -8,7 +8,7 @@
     <div class="app-wrapper">
         <div class="app-content pt-3 p-md-3 p-lg-4">
             <div class="container-xl">
-                
+
 
                 <div class="tab-content" id="orders-table-tab-content">
                     <div class="tab-pane fade show active" id="orders-all" role="tabpanel" aria-labelledby="orders-all-tab">
@@ -26,7 +26,7 @@
                                             </tr>
                                         </thead>
                                         <tbody id="customers-tbody">
-                                            
+
                                             <!-- Display Data when fetched from the server -->
                                             @forelse ($data as $customer)
                                                 <tr>
@@ -45,9 +45,13 @@
                                                                 <i class="fa-regular fa-envelope"></i>
                                                             </a>
                                                         @endif
+
+                                                        <a href="/delete/customer/{{$customer['id']}}">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </a>
                                                     </td>
                                                 </tr>
-                                                
+
                                             @empty
                                                 <tr>
                                                     <td colspan="5" class="text-center">No customers found.</td>
@@ -66,7 +70,7 @@
 
     @include('partials.footer')
 
-    
+
 
 </body>
 </html>

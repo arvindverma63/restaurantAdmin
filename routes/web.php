@@ -89,6 +89,7 @@ Route::middleware(['auth.token'])->group(function () {
     Route::get('/transactions',[TransactionController::class,'getTransactions'])->name('transactions');
 
     Route::get('/customers',[CustomerController::class,'customerTable'])->name('customers');
+    Route::get('/delete/customer/{id}',[CustomerController::class,'deleteCustomer'])->name('delete.customer');
     Route::get('/stats',[ReportController::class,'stats']);
 
     Route::get('/qr',[QrController::class,'qrView'])->name('qr');
@@ -98,4 +99,5 @@ Route::middleware(['auth.token'])->group(function () {
 
     Route::get('/getNotification',[OrderController::class,'getNotification']);
     Route::get('/dailyReportTable',[PageController::class,'dailyReportTable'])->name('dailyReport');
+
 });
