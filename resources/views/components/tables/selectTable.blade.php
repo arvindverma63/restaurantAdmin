@@ -36,7 +36,7 @@
 
                                 <div class="card text-center" style="width: 100px; height: 100px; margin: auto;">
                                     <div class="card-body d-flex align-items-center justify-content-center">
-                                        <h5 class="card-title">Take away</h5>
+                                        <h5 class="card-title">Take Away</h5>
                                     </div>
                                 </div>
 
