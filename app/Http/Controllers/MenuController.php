@@ -144,7 +144,7 @@ class MenuController extends Controller
         ]);
 
 
-        Log::info('validated request',$validatedData);
+        Log::info('validated request', $validatedData);
 
         // Prepare data for the PUT request
         $data = [
@@ -192,13 +192,19 @@ class MenuController extends Controller
             'Authorization' => 'Bearer ' . $token,
         ]);
 
-        // Attach image if provided
+        // Attach the image if it exists
         if ($image) {
-            $request->attach('itemImage', file_get_contents($image->getRealPath()), $image->getClientOriginalName());
+            $request = $request->attach(
+                'itemImage',
+                file_get_contents($image->getRealPath()),
+                $image->getClientOriginalName()
+            );
         }
 
-        return $request->put("{$baseURL}/menu/update/{$id}", $data);
+        // Use asMultipart to ensure correct encoding
+        return $request->asMultipart()->put("{$baseURL}/menu/update/{$id}", $data);
     }
+
 
     public function updateMenuStock(Request $request, $id)
     {
