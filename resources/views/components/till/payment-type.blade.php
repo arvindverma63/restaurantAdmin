@@ -14,7 +14,7 @@
                     <option value="card">Card</option>
                     <option value="split">Split</option>
                 </select>
-                <div id="split-container" style="margin-top: 10px; display: none;">
+                <div id="split-container" style="margin-top: 10px; display: none; justify-content: space-between">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <label>Online</label>
