@@ -207,6 +207,6 @@ class PageController extends Controller
     public function paymentReport(ReportController $reportController)
     {
 
-        return view('Reports.todayReport', ['data' => $reportController->paymentTypeReport()->json()]);
+        return view('Reports.paymentTypeReport', ['data' => $reportController->paymentTypeReport()->json()]);
     }
 }
