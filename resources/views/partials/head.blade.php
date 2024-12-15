@@ -11,11 +11,11 @@
     <link rel="shortcut icon" href="favicon.ico">
 
     <!-- FontAwesome JS-->
-    <script defer src="{{asset('assets/plugins/fontawesome/js/all.min.js')}}"></script>
-    <link rel="style/css" href="{{asset('assets/css/sweet-alert.css')}}">
+    <script defer src="{{asset('assets/plugins/fontawesome/js/all.min.js')}}?v={{time()}}"></script>
+    <link rel="style/css" href="{{asset('assets/css/sweet-alert.css')}}?v={{time()}}">
     <!-- App CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link id="theme-style" rel="stylesheet" href="{{asset('assets/css/portal.css')}}">
+    <link id="theme-style" rel="stylesheet" href="{{asset('assets/css/portal.css')}}?v={{time()}}">
     <meta name="csrf-token" content="{{csrf_token()}}">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
