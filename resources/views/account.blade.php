@@ -45,7 +45,7 @@
                                                     data-column="image"
 
                                                 ><img class="profile-image rounded-circle"
-                                                        src="{{$profile['image'] ? Storage::url('profile_images/' . $profile['image']) : "https://placehold.co/100" }}" alt=""></div>
+                                                        src="{{$profile['image'] ? $profile['image'] : "https://placehold.co/100" }}" alt=""></div>
                                                 <a class="btn-sm app-btn-secondary ms-auto  change-btn"
                                                     href="javascript:void(0)">Change</a>
                                             </div>
@@ -391,8 +391,6 @@
 
                     if(isImageSet){
                         form.setAttribute('enctype', 'multipart/form-data');
-                        console.log(form);
-
                     }
 
                     let csrfInput = document.createElement('input');

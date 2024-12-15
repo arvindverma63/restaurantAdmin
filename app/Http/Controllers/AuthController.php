@@ -53,6 +53,7 @@ class AuthController extends Controller
             'email' => $validate['email'],
         ]);
 
+
         // Debugging: Log the API response to ensure the token is being returned
         Log::info('Verify OTP API Response: ', $response->json());
 
@@ -60,6 +61,7 @@ class AuthController extends Controller
         if ($response->successful()) {
             $token = $response->json('token');
             $user_id = $response->json('user_id');
+            $profile_image = $response->json('profile_image');
             $restaurant_id = $response->json('restaurant_id');
 
             // Debugging: Ensure the token is received
@@ -71,11 +73,13 @@ class AuthController extends Controller
             // Store the token and other values in Session
             Session::put('token', $token, now()->addMinutes(60000));
             Session::put('user_id', $user_id, now()->addMinutes(60000));
+            Session::put('profile_image', $profile_image, now()->addMinutes(60000));
             Session::put('restaurant_id', $restaurant_id, now()->addMinutes(60000));
 
             // Debugging: Log the Session values to ensure they are stored
             Log::info('Token Stored in Session: ' . Session::get('token'));
             Log::info('User ID Stored in Session: ' . Session::get('user_id'));
+            Log::info('User ID Stored in Session: ' . Session::get('profile_image'));
             Log::info('Restaurant ID Stored in Session: ' . Session::get('restaurant_id'));
 
             // Check if Session has values
@@ -99,6 +103,7 @@ class AuthController extends Controller
         // Clear the Sessiond token, user_id, and restaurant_id
         Session::forget('token');
         Session::forget('user_id');
+        Session::forget('profile_image');
         Session::forget('restaurant_id');
 
         // Clear the session
