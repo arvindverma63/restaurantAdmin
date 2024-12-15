@@ -50,4 +50,23 @@ class ReportController extends Controller
             'url'=>$restaurantId,
         ], $response->status());
     }
+    public function paymentTypeReport(){
+        $token = Session::get('token');
+        $restaurantId = Session::get('restaurant_id');
+        $baseUrl = env('API_BASE_URL');
+        $response = Http::withHeaders([
+            'Authorization'=>'Bearer'.$token,
+        ])->get($baseUrl.'/getReportByType/'.$restaurantId);
+
+        if ($response->successful()) {
+            return $response;
+        }
+
+
+        return response()->json([
+            'error' => 'Failed to fetch data',
+            'message' => $response->body(),
+            'url'=>$restaurantId,
+        ], $response->status());
+    }
 }
