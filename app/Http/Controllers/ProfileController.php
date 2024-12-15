@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use GuzzleHttp\Client;
+use Illuminate\Contracts\Session\Session as SessionSession;
 
 class ProfileController extends Controller
 {

@@ -202,7 +202,7 @@ class MenuController extends Controller
         }
 
         // Use asMultipart to ensure correct encoding
-        return $request->asMultipart()->put("{$baseURL}/menu/update/{$id}", $data);
+        return $request->asMultipart()->post("{$baseURL}/menu/update/{$id}", $data);
     }
 
 
