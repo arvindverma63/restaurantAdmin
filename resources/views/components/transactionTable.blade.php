@@ -13,7 +13,7 @@
     </thead>
     <tbody id="transaction-tbody">
         @if (empty($data) || !is_iterable($data))
-            
+
         @else
             @foreach ($data as $transaction)
                 <tr onclick="getInvoice({{ $transaction['id'] }})"
@@ -33,4 +33,4 @@
     </tbody>
 </table>
 
-<script src="{{ asset('assets/js/transactions/invoice.js') }}" defer></script>
+<script src="{{ asset('assets/js/transactions/invoice.js') }}?v={{time()}}" defer></script>

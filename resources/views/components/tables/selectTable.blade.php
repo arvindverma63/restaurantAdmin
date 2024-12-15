@@ -27,36 +27,22 @@
                                     </div>
 
                                 </a>
-                                {{-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <li><a class="dropdown-item" href="/deleteQr/{{ $qr['id'] }}">Delete</a></li>
-                                    <li data-bs-toggle="modal" data-bs-target="#exampleModal{{ $qr['id'] }}">
-                                        <a class="dropdown-item">Download</a></li>
-                                </ul> --}}
                             </div>
                         </div>
+                    @endforeach
+                    <div class="col-6 col-sm-6 col-md-4 col-lg-2">
+                        <div class="dropdown">
+                            <a href="/till?tableNumber=0">
 
-                        {{-- <!-- Modal -->
-                        <div class="modal fade" id="exampleModal{{ $qr['id'] }}" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Download QR</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <img src="{{ $qr['qrCodeUrl'] }}">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" onclick="downloadQRCode('{{ $qr['qrCodeUrl'] }}')">Download</button>
+                                <div class="card text-center" style="width: 100px; height: 100px; margin: auto;">
+                                    <div class="card-body d-flex align-items-center justify-content-center">
+                                        <h5 class="card-title">Take Away</h5>
                                     </div>
                                 </div>
-                            </div>
-                        </div> --}}
-                    @endforeach
+
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div><!--//container-->
         </div><!--//app-content-->

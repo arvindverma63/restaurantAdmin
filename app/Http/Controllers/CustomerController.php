@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\VarDumper\Caster\RedisCaster;
 
 class CustomerController extends Controller
 {
@@ -106,6 +107,21 @@ class CustomerController extends Controller
                 'data' => [],
                 'error' => 'An error occurred while fetching customer data. Please try again later.',
             ]);
+        }
+    }
+    public function deleteCustomer($id){
+        $token = Session::get('token');
+        $baseUrl = env('API_BASE_URL');
+
+        $response = Http::withHeaders([
+            'Authorization'=>'Bearer'.$token,
+        ])->delete($baseUrl.'/customer/'.$id);
+
+        if($response->successful()){
+            return redirect()->back()->with('success', 'customer deleted successfully.');
+        }
+        else{
+            return redirect()->back()->with('error','failed to delete');
         }
     }
 }

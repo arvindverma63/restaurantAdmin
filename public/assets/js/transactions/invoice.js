@@ -39,8 +39,11 @@ window.getInvoice = async function (id) {
                             ${transactionData.restaurantAddress}
                         </div>
                         <div style="width: 48%; text-align: right;">
-                            <strong>Acme Corp.</strong><br> <b>Customer</b>
-                            ${transactionData.userName}  <br><b>Table Number:</b> ${transactionData.tableNumber}<br>
+                            <strong>Acme Corp.</strong><br>
+                            <b>Customer:</b> ${transactionData.userName}<br>
+                    ${transactionData.tableNumber === 0
+                    ? `<b>Take away</b>`
+                    : `<b>Table Number:</b> ${transactionData.tableNumber}`}
                         </div>
                     </div>
 
