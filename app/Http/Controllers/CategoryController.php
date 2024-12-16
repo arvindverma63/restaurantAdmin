@@ -72,7 +72,7 @@ class CategoryController extends Controller
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $token,
         ])->attach('categoryImage', file_get_contents($imagePath), $imageName)
-          ->put($baseURL . '/category/' . $id, $data);
+          ->post($baseURL . '/category/' . $id, $data);
     } else {
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $token,
