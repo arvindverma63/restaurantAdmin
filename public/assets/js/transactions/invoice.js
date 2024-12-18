@@ -41,7 +41,7 @@ window.getInvoice = async function (id) {
                         <div style="width: 48%; text-align: right;">
                             <strong>Acme Corp.</strong><br>
                             <b>Customer:</b> ${transactionData.userName}<br>
-                            <input type="hidden" id="customer-email" value="${transactionData.userEmail}">${transactionData.userEmail}</br>
+                            <input type="hidden" id="customer-email" value="${transactionData.userEmail}">
                     ${transactionData.tableNumber === 0
                     ? `<b>Take away</b>`
                     : `<b>Table Number:</b> ${transactionData.tableNumber}`}
