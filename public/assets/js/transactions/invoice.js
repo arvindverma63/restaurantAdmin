@@ -24,7 +24,7 @@ window.getInvoice = async function (id) {
                     <!-- Invoice Header -->
                     <div style="border-bottom: 2px solid #eee; padding-bottom: 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
                         <div style="max-width: 200px;">
-                            <h3>DQ</h3>
+                            <h3><img src="${transactionData.restaurantLogo}" style="height: 50px; width: 50px; border-radius: 50%;"></h3>
                         </div>
                         <div style="text-align: right;">
                             <h4 style="margin: 0;">Invoice #: ${transactionData.id}</h4>
