@@ -9,6 +9,7 @@
             <div class="modal-body" id="invoice-body">
 
 
+                <button type="button" class="btn btn-danger">Danger</button>
 
             </div>
         </div>
