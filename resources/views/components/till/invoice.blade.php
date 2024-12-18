@@ -18,39 +18,48 @@
     </div>
 </div>
 <script>
-    document.getElementById('mail-invoice').addEventListener('click', function() {
-        const invoiceHtml = document.getElementById('invoice-body').innerHTML;
+    document.getElementById('mail-invoice').addEventListener('click', async function () {
+    const invoiceHtml = document.getElementById('invoice-body').innerHTML;
+    const customerMail = document.getElementById('customer-email').value;
 
-        let token;
-        let apiBaseUrl;
+    if (!customerMail) {
+        alert('Please enter a valid customer email.');
+        return;
+    }
 
-        fetch('/getAuth')
-        .then(response=>response.json())
-        .then(data=>{
-            token = data.token;
-            apiBaseUrl = data.app_url;
-        })
+    try {
+        // Step 1: Fetch Auth Data
+        const authResponse = await fetch('/getAuth');
+        if (!authResponse.ok) throw new Error('Failed to fetch authentication details.');
 
-        fetch(apiBaseUrl+'/send-invoice-email', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer'+token,
-                },
-                body: JSON.stringify({
-                    htmlContent: invoiceHtml,
-                    email: 'customer@example.com'
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Invoice sent successfully!');
-                } else {
-                    alert('Failed to send invoice.');
-                }
-            })
-            .catch(error => console.error('Error:', error));
+        const authData = await authResponse.json();
+        const token = authData.token;
+        const apiBaseUrl = authData.app_url;
 
-    })
+        // Step 2: Send Email Request
+        const emailResponse = await fetch(`${apiBaseUrl}/send-invoice-email`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                htmlContent: invoiceHtml,
+                email: customerMail,
+            }),
+        });
+
+        const responseData = await emailResponse.json();
+
+        if (responseData.success) {
+            alert('Invoice sent successfully!');
+        } else {
+            throw new Error(responseData.message || 'Failed to send invoice.');
+        }
+    } catch (error) {
+        console.error('Error:', error.message);
+        alert(`Error: ${error.message}`);
+    }
+});
+
 </script>
