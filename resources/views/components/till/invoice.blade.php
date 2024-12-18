@@ -1,4 +1,16 @@
 <!-- Modal -->
+<!-- Toast Container -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1055;">
+    <div id="toastMessage" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">
+                Invoice sent successfully!
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-fullscreen">
         <div class="modal-content">
@@ -35,7 +47,6 @@
         const authData = await authResponse.json();
         const token = authData.token;
         const apiBaseUrl = authData.app_url;
-        console.log(token);
 
         // Step 2: Send Email Request
         const emailResponse = await fetch(`${apiBaseUrl}/send-invoice-email`, {
@@ -53,14 +64,17 @@
         const responseData = await emailResponse.json();
 
         if (responseData.success) {
-            alert('Invoice sent successfully!');
+            // Show success toast
+            const toast = new bootstrap.Toast(document.getElementById('toastMessage'));
+            toast.show();
         } else {
             throw new Error(responseData.message || 'Failed to send invoice.');
         }
     } catch (error) {
         console.error('Error:', error.message);
-        alert(`Error: ${error.message}`);
+        alert(`Error: ${error.message}`); // You can also create a toast for errors
     }
 });
+
 
 </script>
