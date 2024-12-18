@@ -35,6 +35,7 @@
         const authData = await authResponse.json();
         const token = authData.token;
         const apiBaseUrl = authData.app_url;
+        console.log(authData);
 
         // Step 2: Send Email Request
         const emailResponse = await fetch(`${apiBaseUrl}/send-invoice-email`, {
