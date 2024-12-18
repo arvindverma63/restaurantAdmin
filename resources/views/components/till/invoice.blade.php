@@ -12,6 +12,10 @@
                 <button type="button" class="btn btn-danger">Danger</button>
 
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger">Send Mail</button>
+              </div>
+
         </div>
     </div>
 </div>
