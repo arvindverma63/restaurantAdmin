@@ -9,13 +9,48 @@
             <div class="modal-body" id="invoice-body">
 
 
-                <button type="button" class="btn btn-danger">Danger</button>
-
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger">Send Mail</button>
-              </div>
+                <button type="button" id="mail-invoice" class="btn btn-danger text-white">Mail Invoice</button>
+            </div>
 
         </div>
     </div>
 </div>
+<script>
+    document.getElementById('mail-invoice').addEventListener('click', function() {
+        const invoiceHtml = document.getElementById('invoice-body').innerHTML;
+
+        let token;
+        let apiBaseUrl;
+
+        fetch('/getAuth')
+        .then(response=>response.json())
+        .then(data=>{
+            token = data.token;
+            apiBaseUrl = data.app_url;
+        })
+
+        fetch(apiBaseUrl+'/send-invoice-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer'+token,
+                },
+                body: JSON.stringify({
+                    htmlContent: invoiceHtml,
+                    email: 'customer@example.com'
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Invoice sent successfully!');
+                } else {
+                    alert('Failed to send invoice.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+
+    })
+</script>
