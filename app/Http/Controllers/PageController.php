@@ -70,6 +70,7 @@ class PageController extends Controller
             // Extract the 'data' array from the response
             $data = $response->json('data');
 
+
             // Check if 'menus' and 'inventoryOptions' exist in the response data
             $menus = isset($data['menus']) ? $data['menus'] : [];
             $inventoryOptions = isset($data['inventoryOptions']) ? $data['inventoryOptions'] : [];

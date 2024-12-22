@@ -129,54 +129,60 @@
                     });
                 </script>
 
-  <!-- Edit Stock Modal -->
-  <div class="modal fade" id="editStockModal{{ $menuItem['id'] }}" tabindex="-1" aria-labelledby="editStockLabel{{ $menuItem['id'] }}" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editStockLabel{{ $menuItem['id'] }}">Edit Stock for: {{ $menuItem['itemName'] }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form id="editStockForm{{ $menuItem['id'] }}" action="{{ url('updateMenuStock/' . $menuItem['id']) }}" method="POST">
-                @csrf
-                @method('PUT')
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label class="form-label">Stock Items</label>
-                        <div id="stockItemsContainer{{ $menuItem['id'] }}">
-                            <!-- Existing stock items from database -->
-                            @foreach($menuItem['stockItems'] as $index => $stockItem)
-                                <div class="row g-2 mb-2 stock-item-row">
-                                    <div class="col">
-                                        <select class="form-select" name="stockItems[{{ $index }}][stockId]" required>
-                                            <option value="" disabled>Select Stock Item</option>
-                                            @foreach($menuItems['data']['inventoryOptions'] as $inventoryItem)
-                                                <option value="{{ $inventoryItem['id'] }}" {{ $stockItem['stockId'] == $inventoryItem['id'] ? 'selected' : '' }}>
-                                                    {{ $inventoryItem['itemName'] }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col">
-                                        <input type="number" step="0.001" class="form-control" name="stockItems[{{ $index }}][quantity]" value="{{ $stockItem['quantity'] }}" placeholder="Quantity" required>
-                                    </div>
-                                    <div class="col-auto">
-                                        <button type="button" class="btn btn-danger btn-sm remove-stock-item" onclick="removeStockItemRow(this)">&times;</button>
-                                    </div>
-                                </div>
-                            @endforeach
+            <!-- Edit Stock Modal -->
+            <div class="modal fade stockeditmodal" id="editStockModal{{ $menuItem['id'] }}" tabindex="-1" aria-labelledby="editStockLabel{{ $menuItem['id'] }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editStockLabel{{ $menuItem['id'] }}">Edit Stock for: {{ $menuItem['itemName'] }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <button type="button" class="btn btn-primary btn-sm" onclick="addStockItemRow({{ $menuItem['id'] }})">Add Stock Item</button>
+                        <form id="editStockForm{{ $menuItem['id'] }}" action="{{ url('updateMenuStock/' . $menuItem['id']) }}" class="edit-stock-form" method="POST">
+                            @csrf
+                            @method('PUT')
+
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Stock Items</label>
+                                    <div id="stockItemsContainer{{ $menuItem['id'] }}">
+                                        <!-- Existing stock items from database -->
+                                        @foreach($menuItem['stockItems'] as $index => $stockItem)
+
+                                        <div class="row g-2 mb-2 stock-item-row stock-items">
+                                            <input type="hidden" name="stockItems[{{ $stockItem['id'] }}][id]" class="menu_inventory_id" value="{{$stockItem['id']}}">
+                                            <div class="col">
+                                                <select class="form-select stock-id" name="stockItems[{{ $index }}][stockId]" required>
+                                                    <option value="" disabled>Select Stock Item</option>
+                                                    @foreach($menuItems['data']['inventoryOptions'] as $inventoryItem)
+                                                        <option value="{{ $inventoryItem['id'] }}" {{ $stockItem['stockId'] == $inventoryItem['id'] ? 'selected' : '' }}>
+                                                            {{ $inventoryItem['itemName'] }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <input type="number" step="0.001" class="form-control stock-quantity" name="stockItems[{{ $index }}][quantity]" value="{{ $stockItem['quantity'] }}" placeholder="Quantity" required>
+                                            </div>
+                                            <div class="col-auto">
+                                                <button type="button" class="btn btn-danger btn-sm remove-stock-item" onclick="removeStockItemRow(this)" data-delete-item-url="{{route('delete.menu.inventory.stock', $stockItem['id'])}}">
+                                                    &times;
+
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="addStockItemRow({{ $menuItem['id'] }})">Add Stock Item</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Save Stock</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save Stock</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+            </div>
 
             @endforeach
         </tbody>
@@ -186,7 +192,8 @@
 <template id="stock-item-template">
     <div class="row g-2 mb-2 stock-item-row">
         <div class="col">
-            <select class="form-select" required>
+
+            <select class="form-select stock-id" required>
                 <option value="" disabled selected>Select Stock Item</option>
                 @foreach($menuItems['data']['inventoryOptions'] as $inventoryItem)
                     <option value="{{ $inventoryItem['id'] }}">{{ $inventoryItem['itemName'] }}</option>
@@ -194,10 +201,13 @@
             </select>
         </div>
         <div class="col">
-            <input type="number" step="0.001" class="form-control" placeholder="Quantity" required>
+            <input type="number" step="0.001" class="form-control stock-quantity" placeholder="Quantity" required>
         </div>
         <div class="col-auto">
-            <button type="button" class="btn btn-danger btn-sm remove-stock-item" onclick="removeStockItemRow(this)">&times;</button>
+            <button type="button" class="btn btn-danger btn-sm remove-stock-item" onclick="removeStockItemRow(this)">
+                &times;
+
+            </button>
         </div>
     </div>
 </template>
@@ -221,7 +231,84 @@
 
         // Function to remove a stock item row
         window.removeStockItemRow = function(button) {
-            button.closest('.stock-item-row').remove();
+
+            const loading = `<div class="spinner-border text-light" role="status" style="width: 20px; height: 20px;">
+                                <span class="visually-hidden">Loading...</span>
+                                </div>`;
+
+            let preButtonContent = button.innerHTML;
+            button.disabled = true;
+            button.innerHTML = loading;
+            button.classList.add('padding-loading-button');
+
+            const deleteUrl = button.getAttribute('data-delete-item-url');
+            if(deleteUrl){
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                fetch(deleteUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-csrf-token': csrfToken
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+
+                    if(data['status'] == "success"){
+                        button.closest('.stock-item-row').remove();
+                    }else{
+                        button.classList.remove('padding-loading-button');
+                        button.innerHTML = preButtonContent;
+                        button.disabled = false;
+                    }
+
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+            }
         };
     });
+</script>
+
+<script>
+   document.querySelectorAll(".stockeditmodal").forEach(modal => {
+
+    const form = modal.querySelector('.edit-stock-form');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const stockArray = [];
+        console.log(form);
+        modal.querySelectorAll('.stock-item-row').forEach(row => {
+            const stockid = row.querySelector('.stock-id').value;
+            const stockQty = row.querySelector('.stock-quantity').value;
+            const inventoryInput = row.querySelector('.menu_inventory_id');
+
+            if(inventoryInput){
+                stockArray.push({
+                    id: inventoryInput.value,
+                    stockid: stockid,
+                    stockQty: stockQty,
+                });
+            }else{
+                stockArray.push({
+                    stockid: stockid,
+                    stockQty: stockQty,
+                });
+            }
+        });
+
+        let inputElement = document.createElement('input');
+        inputElement.setAttribute('name', 'stock_items');
+        inputElement.type = "hidden";
+        inputElement.value = JSON.stringify(stockArray);
+
+        form.appendChild(inputElement);
+        form.submit();
+    });
+   });
+
 </script>

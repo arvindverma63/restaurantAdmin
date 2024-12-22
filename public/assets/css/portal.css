@@ -15275,3 +15275,6 @@ button.close:focus {
 .processing-badge{
     min-width: 60px;
 }
+.padding-loading-button{
+    padding: 7px 11px;
+}

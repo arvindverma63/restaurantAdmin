@@ -67,6 +67,25 @@ class InventoryController extends Controller
         }
     }
 
+    public function deleteMenuInventoryItem($id)
+    {
+        $token = Session::get('token');
+        $restaurantId = Session::get('restaurant_id');
+        $appUrl = env('API_BASE_URL');
+
+        // Make API call to delete supplier
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $token,  // Add space after 'Bearer'
+        ])->delete($appUrl . '/menu_inventory/' . $id);
+
+        // Check if the API call was successful
+        if ($response->successful()) {
+            return response()->json(['status' => 'success', 'message' => 'Menu stock item deleted successfully']);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Failed to delete supplier']);
+        }
+    }
+
     public function getStock()
     {
         $token = Session::get('token');

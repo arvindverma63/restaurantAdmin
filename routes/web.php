@@ -61,7 +61,7 @@ Route::middleware(['auth.token'])->group(function () {
     Route::put('/menu/{id}', [MenuController::class, 'updateMenuItem'])->name('menu.update');
 
     // Route for deleting menu item
-    Route::delete('/menu/{id}', [MenuController::class, 'deleteMenuItem'])->name('menu.delete');
+    Route::post('/menu/{id}', [MenuController::class, 'deleteMenuItem'])->name('menu.delete');
     Route::get('/get/order', [OrderController::class, 'getOrders'])->name('getOrder');
     Route::get('/get/suppliers', [SupplierController::class, 'getSupplier'])->name('getSuppliers');
     Route::post('/orders/{id}/status', [OrderController::class, 'updateStatus'])->name('updateOrderStatus');
@@ -73,6 +73,7 @@ Route::middleware(['auth.token'])->group(function () {
     Route::put('/updatestock/{id}', [InventoryController::class, 'updateStock']);
 
     Route::get('/deleteStock/{id}', [InventoryController::class, 'deleteStock'])->name('delete.stock');
+    Route::post('/delete-menu-inventory-item/{id}', [InventoryController::class, 'deleteMenuInventoryItem'])->name('delete.menu.inventory.stock');
 
     Route::get('getAllStocks', [InventoryController::class, 'getStock'])->name('getAllStock');
     Route::put('/updateMenuStock/{id}', [MenuController::class, 'updateMenuStock'])->name('updateMenuStock');

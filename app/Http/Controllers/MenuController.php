@@ -208,12 +208,61 @@ class MenuController extends Controller
 
     public function updateMenuStock(Request $request, $id)
     {
-        // This will show all request data submitted
-        dd($request->all());
 
-        return response()->json(['data' => $request]);
 
-        // Your logic to handle the request
+        if(!isset($request->stock_items)){
+           return redirect()->back()->with('error', 'Stock items not given');
+        }
+
+        $token = Session::get('token');
+        $restaurantId = Session::get('restaurant_id');
+        $app_url = env('API_BASE_URL');
+
+        $decodedData = json_decode($request->stock_items);
+
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            dd('json error');
+            return redirect()->back()->with('error', 'Invalid Stock Input!');
+
+        }
+
+
+        $successCounter = 0;
+        $data = [];
+        $errors = array();
+
+        foreach ($decodedData as $stock_item) {
+            if (isset($stock_item->stockid) && isset($stock_item->stockQty)) {
+                $data[] = [
+                    'id' => $stock_item->id ?? null,
+                    'menuId' => $id,
+                    'restaurantId' => $restaurantId,
+                    'quantity' => $stock_item->stockQty,
+                    'stockId' => $stock_item->stockid,
+                ];
+            }
+        }
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])->post($app_url . '/menu_inventory/save-all', $data);
+
+        if ($response->successful()) {
+            $responseData = $response->json();
+            $successCounter += $responseData['successCount'];
+            $errors = $responseData['errors'];
+        }
+
+
+        if($successCounter > 0 && count($decodedData) > 0){
+
+            return redirect()->back()->with('success', 'Stock items saved successfully!');
+        }
+
+
+        return redirect()->back()->withErrors(['error' => $errors[0] ?? 'Failed to save stock items.']);
+
     }
 
 

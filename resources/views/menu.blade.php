@@ -8,6 +8,11 @@
         <div class="app-content pt-3 p-md-3 p-lg-4">
             <div class="container-xl">
 
+                @if(session()->has('error'))
+                    {{session('error')}}
+                @endif
+
+
                 <div class="row g-3 mb-4 align-items-center justify-content-between">
                     <div class="col-auto">
                         <h1 class="app-page-title mb-0">Menu</h1>
@@ -44,7 +49,7 @@
             </div><!--//container-fluid-->
         </div><!--//app-content-->
 
-        
+
     </div><!--//app-wrapper-->
 
     @include('partials.footer')
