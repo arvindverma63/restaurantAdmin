@@ -93,7 +93,7 @@
                                                 @csrf
                                                 <input type="hidden" name="status" value="complete">
 
-                                                  <select class="form-control" name="type">
+                                                  <select class="form-control mb-3" name="type">
                                                     <option value="Online">Online</option>
                                                     <option value="Offline">Offline</option>
                                                   </select>
