@@ -43,11 +43,13 @@ public function updateStatus(Request $request, $id)
     // Validate the incoming request with the correct statuses
     $request->validate([
         'status' => 'required|in:processing,accept,reject,complete',
+        'type' => 'nullable',
     ]);
 
     // Get token and restaurant ID from Session
     $token = Session::get('token');
     $status = $request->input('status');  // Get the new status from the request
+    $type = $request->input('type');
     $app_url = env('API_BASE_URL');
 
     // Make sure the token exists
@@ -60,6 +62,7 @@ public function updateStatus(Request $request, $id)
         'Authorization' => 'Bearer ' . $token,
     ])->put($app_url . '/orders/' . $id . '/status', [
         'status' => $status,  // Send restaurantId with the request
+        'type' => $type
     ]);
 
     // Check if the API response is successful

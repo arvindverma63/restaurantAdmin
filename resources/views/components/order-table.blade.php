@@ -92,6 +92,13 @@
                                             <form action="{{ route('updateOrderStatus', $order['order_id']) }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="status" value="complete">
+
+                                                  <select class="form-control" name="type">
+                                                    <option value="Online">Online</option>
+                                                    <option value="Offline">Offline</option>
+                                                  </select>
+
+
                                                 <button type="submit" class="btn btn-success text-white">Mark as Complete</button>
                                             </form>
                                             <form action="{{ route('updateOrderStatus', $order['order_id']) }}" method="POST" class="mt-2">
