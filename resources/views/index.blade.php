@@ -185,31 +185,27 @@
 
 
                 <div class="row g-4 mb-4">
-                    <div class="row mb-4">
-                        <div class="d-flex align-items-center">
-                            <div class="form-group me-3">
-                                <label for="filterYear">Year:</label>
-                                <select id="filterYear" class="form-control">
-                                    <option value="2023">2023</option>
-                                    <option value="2024" selected>2024</option>
-                                </select>
-                            </div>
-                            <div class="form-group me-3">
-                                <label for="filterRestaurant">Restaurant:</label>
-                                <input id="filterRestaurant" type="text" class="form-control"
-                                    placeholder="Enter Restaurant ID" value="R1732246184" />
-                            </div>
-                            <div class="form-group me-3">
-                                <label for="filterType">Report Type:</label>
-                                <select id="filterType" class="form-control">
-                                    <option value="weekly" selected>Weekly</option>
-                                    <option value="monthly">Monthly</option>
-                                </select>
-                            </div>
-                            <button id="filterButton" class="btn btn-primary mt-2">Apply Filters</button>
-                        </div>
-                    </div>
+
                     <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
+                        <div class="row mb-4">
+                            <div class="d-flex align-items-center">
+                                <div class="form-group me-3">
+                                    <label for="filterYear">Year:</label>
+                                    <select id="filterYear" class="form-control">
+                                        <option value="2023">2023</option>
+                                        <option value="2024" selected>2024</option>
+                                    </select>
+                                </div>
+                                <div class="form-group me-3">
+                                    <label for="filterType">Report Type:</label>
+                                    <select id="filterType" class="form-control">
+                                        <option value="weekly" selected>Weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                    </select>
+                                </div>
+                                <button id="filterButton" class="btn btn-primary mt-2">Apply Filters</button>
+                            </div>
+                        </div>
                         <canvas id="myChart" style="width:100%;padding:10px;"></canvas>
                     </div><!--//app-card-->
                 </div>
