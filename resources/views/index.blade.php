@@ -193,15 +193,23 @@
             fetch('https://rest.dicui.org/api/dashboard/chart-data?year=2024&restaurantId=R1732246184')
                 .then(response => response.json())
                 .then(data => {
+                    const brightColors = [
+                        'rgba(255, 99, 132, 1)', // Bright Pink
+                        'rgba(54, 162, 235, 1)', // Bright Blue
+                        'rgba(255, 206, 86, 1)', // Bright Yellow
+                        'rgba(75, 192, 192, 1)', // Bright Teal
+                        'rgba(153, 102, 255, 1)', // Bright Purple
+                        'rgba(255, 159, 64, 1)' // Bright Orange
+                    ];
+
                     const chartData = {
                         labels: data.labels,
                         datasets: data.datasets.map((dataset, index) => ({
                             label: dataset.label,
                             data: dataset.data.map(value => parseFloat(value) || 0),
-                            borderColor: index === 0 ? 'rgba(75, 192, 192, 1)' :
-                            'rgba(153, 102, 255, 1)', // Customize border color
-                            backgroundColor: index === 0 ? 'rgba(75, 192, 192, 0.5)' :
-                                'rgba(153, 102, 255, 0.5)', // Customize fill color
+                            borderColor: brightColors[index % brightColors.length], // Bright border color
+                            backgroundColor: brightColors[index % brightColors.length] +
+                            '80', // Bright fill color with transparency
                             fill: dataset.fill
                         }))
                     };
@@ -245,14 +253,7 @@
                         datasets: [{
                             label: 'Doughnut Data',
                             data: data.datasets[0].data.map(value => parseFloat(value) || 0),
-                            backgroundColor: [
-                                'rgba(255, 99, 132, 0.5)',
-                                'rgba(54, 162, 235, 0.5)',
-                                'rgba(255, 206, 86, 0.5)',
-                                'rgba(75, 192, 192, 0.5)',
-                                'rgba(153, 102, 255, 0.5)',
-                                'rgba(255, 159, 64, 0.5)'
-                            ] // Add custom colors for the doughnut chart
+                            backgroundColor: brightColors // Use bright colors for doughnut segments
                         }]
                     };
 
