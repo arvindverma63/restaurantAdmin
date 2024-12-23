@@ -5,6 +5,8 @@ fetch('/getAuth')
 .then(response=>response.json())
 .then(data=>{
     indexChart(data.restaurantId);
+    // Fetch data once and initialize charts
+    fetchDataOnce(data.restaurantId, year);
     // indexChartWeek(data.restaurantId);
 })
 

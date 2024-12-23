@@ -2,6 +2,7 @@ let chartData = {}; // Variable to store pre-fetched data
 
                     document.getElementById('filterButton').addEventListener('click', () => {
                         const reportType = document.getElementById('filterType').value;
+                        const year = document.getElementById("filterYear").value;
                         const weekRange = document.getElementById('weekRange').value.split('-').map(
                         Number); // Get week range as an array
                         filterDataAndRenderCharts(reportType, weekRange);
@@ -111,5 +112,4 @@ let chartData = {}; // Variable to store pre-fetched data
                         });
                     }
 
-                    // Fetch data once and initialize charts
-                    fetchDataOnce('R1732246184', '2024');
+

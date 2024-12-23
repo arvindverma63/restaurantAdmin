@@ -235,7 +235,7 @@
 
 
 
-                <script src="{{asset('assets/js/index-chart-2.js')}}?v={{time()}}"></script>
+
 
 
             </div><!--//container-fluid-->
@@ -243,7 +243,7 @@
 
 
         <script type="text/javascript" src="{{ asset('assets/js/index-charts.js') }}?v={{ time() }}"></script>
-
+        <script src="{{asset('assets/js/index-chart-2.js')}}?v={{time()}}"></script>
     </div><!--//app-wrapper-->
     @include('partials.footer')
 </body>
