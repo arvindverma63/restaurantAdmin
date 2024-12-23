@@ -186,7 +186,7 @@
 
                 <div class="row g-4 mb-4">
 
-                    <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
+                    <div class="app-card app-card-basic align-items-start shadow-sm">
                         <div class="row mb-4 p-4" style="display: flex; flex-direction: row;">
                                 <div class="form-group me-3">
                                     <label for="filterYear">Year:</label>
