@@ -170,12 +170,12 @@
 
                 <script src="{{ asset('assets/js/reports/stats.js') }}?v={{ time() }}"></script>
                 <div class="row g-4 mb-4">
-                    <div class="col-12 col-lg-4">
+                    <div class="col-12 col-lg-6">
                         <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
                             <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
                         </div><!--//app-card-->
                     </div><!--//col-->
-                    <div class="col-12 col-lg-4">
+                    <div class="col-12 col-lg-6">
                         <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
                             <canvas id="myDoughnutChart" style="width:100%;max-width:700px"></canvas>
                         </div><!--//app-card-->
@@ -195,12 +195,13 @@
                 .then(data => {
                     const chartData = {
                         labels: data.labels,
-                        datasets: data.datasets.map(dataset => ({
+                        datasets: data.datasets.map((dataset, index) => ({
                             label: dataset.label,
-                            data: dataset.data.map(value => parseFloat(value) ||
-                            0), // Convert strings to numbers
-                            borderColor: dataset.borderColor,
-                            backgroundColor: dataset.backgroundColor,
+                            data: dataset.data.map(value => parseFloat(value) || 0),
+                            borderColor: index === 0 ? 'rgba(75, 192, 192, 1)' :
+                            'rgba(153, 102, 255, 1)', // Customize border color
+                            backgroundColor: index === 0 ? 'rgba(75, 192, 192, 0.5)' :
+                                'rgba(153, 102, 255, 0.5)', // Customize fill color
                             fill: dataset.fill
                         }))
                     };
@@ -243,9 +244,15 @@
                         labels: data.labels,
                         datasets: [{
                             label: 'Doughnut Data',
-                            data: data.datasets[0].data.map(value => parseFloat(value) ||
-                            0), // Use the first dataset for simplicity
-                            backgroundColor: data.datasets[0].backgroundColor
+                            data: data.datasets[0].data.map(value => parseFloat(value) || 0),
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.5)',
+                                'rgba(54, 162, 235, 0.5)',
+                                'rgba(255, 206, 86, 0.5)',
+                                'rgba(75, 192, 192, 0.5)',
+                                'rgba(153, 102, 255, 0.5)',
+                                'rgba(255, 159, 64, 0.5)'
+                            ] // Add custom colors for the doughnut chart
                         }]
                     };
 
