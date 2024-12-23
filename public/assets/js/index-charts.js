@@ -9,21 +9,33 @@ fetch('/getAuth')
 
 // Define a set of bright colors explicitly
 const brightColors = [
-    'rgba(255, 99, 132, 1)', // Bright Pink
-    'rgba(54, 162, 235, 1)', // Bright Blue
-    'rgba(255, 206, 86, 1)', // Bright Yellow
-    'rgba(75, 192, 192, 1)', // Bright Teal
-    'rgba(153, 102, 255, 1)', // Bright Purple
-    'rgba(255, 159, 64, 1)' // Bright Orange
+    'rgb(255, 0, 55)', // Bright Pink
+    'rgb(0, 153, 255)', // Bright Blue
+    'rgb(255, 183, 0)', // Bright Yellow
+    'rgb(0, 255, 255)', // Bright Teal
+    'rgb(85, 0, 255)', // Bright Purple
+    'rgb(255, 128, 0)',// Bright Orange
+    'rgb(184, 5, 44)', // Bright Pink
+    'rgb(0, 117, 196)', // Bright Blue
+    'rgb(206, 147, 0)', // Bright Yellow
+    'rgb(0, 255, 255)', // Bright Teal
+    'rgb(85, 0, 255)', // Bright Purple
+    'rgb(255, 128, 0)' // Bright Orange
 ];
 
 const brightBackgroundColors = [
-    'rgba(255, 99, 132, 0.5)', // Transparent Bright Pink
-    'rgba(54, 162, 235, 0.5)', // Transparent Bright Blue
-    'rgba(255, 206, 86, 0.5)', // Transparent Bright Yellow
-    'rgba(75, 192, 192, 0.5)', // Transparent Bright Teal
-    'rgba(153, 102, 255, 0.5)', // Transparent Bright Purple
-    'rgba(255, 159, 64, 0.5)' // Transparent Bright Orange
+    'rgb(255, 0, 55)', // Bright Pink
+    'rgb(0, 153, 255)', // Bright Blue
+    'rgb(255, 183, 0)', // Bright Yellow
+    'rgb(0, 255, 255)', // Bright Teal
+    'rgb(85, 0, 255)', // Bright Purple
+    'rgb(255, 128, 0)',// Bright Orange
+    'rgb(184, 5, 44)', // Bright Pink
+    'rgb(0, 117, 196)', // Bright Blue
+    'rgb(206, 147, 0)', // Bright Yellow
+    'rgb(0, 255, 255)', // Bright Teal
+    'rgb(85, 0, 255)', // Bright Purple
+    'rgb(255, 128, 0)' // Bright Orange
 ];
 
 function indexChart(restaurantId){
