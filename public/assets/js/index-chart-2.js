@@ -8,7 +8,10 @@ let chartData = {}; // Variable to store pre-fetched data
                         filterDataAndRenderCharts(reportType, weekRange);
                     });
 
+                    var year = 2024;
+
                     function fetchDataOnce(restaurantId, year) {
+
                         fetch(`https://rest.dicui.org/api/dashboard/weekly-chart-data?year=${year}&restaurantId=${restaurantId}`)
                             .then(response => response.json())
                             .then(data => {
