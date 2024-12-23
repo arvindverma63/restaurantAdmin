@@ -194,6 +194,116 @@
                     </div><!--//col-->
                 </div><!--//row-->
 
+                <script>
+                function indexChartWeek(restaurantId) {
+                    if (!restaurantId) {
+                        console.error('Restaurant ID is required.');
+                        return;
+                    }
+
+                    const brightColors = [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ];
+                    const brightBackgroundColors = brightColors.map(color => color.replace('1)', '0.2)'));
+
+                    fetch(`https://rest.dicui.org/api/dashboard/weekly-chart-data?year=2024&restaurantId=${restaurantId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (!data.labels || !data.datasets) {
+                                console.error('Invalid data format:', data);
+                                return;
+                            }
+
+                            const chartData = {
+                                labels: data.labels,
+                                datasets: data.datasets.map((dataset, index) => ({
+                                    label: dataset.label,
+                                    data: dataset.data.map(value => parseFloat(value) || 0),
+                                    borderColor: brightColors[index % brightColors.length],
+                                    backgroundColor: brightBackgroundColors[index % brightBackgroundColors.length],
+                                    fill: false
+                                }))
+                            };
+
+                            const ctxBar = document.getElementById('myChart-week').getContext('2d');
+                            if (window.myBarChart) {
+                                window.myBarChart.destroy();
+                            }
+                            window.myBarChart = new Chart(ctxBar, {
+                                type: 'bar',
+                                data: chartData,
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'top'
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Weekly Data Overview'
+                                        }
+                                    },
+                                    scales: {
+                                        x: {
+                                            title: {
+                                                display: true,
+                                                text: 'Week'
+                                            }
+                                        },
+                                        y: {
+                                            title: {
+                                                display: true,
+                                                text: 'Values'
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+
+                            const doughnutCtx = document.getElementById('myDoughnutChart-week').getContext('2d');
+                            if (window.myDoughnutChart) {
+                                window.myDoughnutChart.destroy();
+                            }
+                            const doughnutData = {
+                                labels: data.labels,
+                                datasets: [{
+                                    label: 'Weekly Breakdown',
+                                    data: data.datasets[0].data.map(value => parseFloat(value) || 0),
+                                    backgroundColor: brightColors
+                                }]
+                            };
+                            window.myDoughnutChart = new Chart(doughnutCtx, {
+                                type: 'doughnut',
+                                data: doughnutData,
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'top'
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Doughnut Chart - Weekly Data'
+                                        }
+                                    }
+                                }
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Error fetching the chart data:', error);
+                        });
+                }
+
+                // Call the function with your restaurant ID
+                indexChartWeek('R1732246184');
+                </script>
+
+
             </div><!--//container-fluid-->
         </div><!--//app-content-->
 
