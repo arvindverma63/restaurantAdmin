@@ -128,7 +128,6 @@ fetch('https://rest.dicui.org/api/dashboard/chart-data?year=2024&restaurantId='+
 
 }
 
-
 function indexChartWeek(restaurantId) {
     // Ensure `restaurantId` is provided
     if (!restaurantId) {
@@ -157,12 +156,9 @@ function indexChartWeek(restaurantId) {
                 return;
             }
 
-            // Format the week labels as "Week 1", "Week 2", etc.
-            const weekLabels = data.labels.map(week => `Week ${week}`);
-
             // Prepare the chart data
             const chartData = {
-                labels: weekLabels, // Formatted week labels
+                labels: data.labels, // Weekly labels (e.g., "Week 1", "Week 2", ...)
                 datasets: data.datasets.map((dataset, index) => ({
                     label: dataset.label,
                     data: dataset.data.map(value => parseFloat(value) || 0), // Convert data to numbers
@@ -222,7 +218,7 @@ function indexChartWeek(restaurantId) {
 
             // Prepare Doughnut Chart Data (use first dataset for simplicity)
             const doughnutData = {
-                labels: weekLabels, // Weekly labels
+                labels: data.labels, // Weekly labels
                 datasets: [{
                     label: 'Weekly Breakdown',
                     data: data.datasets[0].data.map(value => parseFloat(value) || 0), // First dataset for simplicity
@@ -252,4 +248,3 @@ function indexChartWeek(restaurantId) {
             console.error('Error fetching the chart data:', error);
         });
 }
-
