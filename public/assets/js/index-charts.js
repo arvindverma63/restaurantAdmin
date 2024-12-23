@@ -1,6 +1,5 @@
 
 const ctx = document.getElementById('myChart').getContext('2d');
-const ctx2 = document.getElementById('myChart-week').getContext('2d');
 
 fetch('/getAuth')
 .then(response=>response.json())
@@ -158,9 +157,12 @@ function indexChartWeek(restaurantId) {
                 return;
             }
 
+            // Format the week labels as "Week 1", "Week 2", etc.
+            const weekLabels = data.labels.map(week => `Week ${week}`);
+
             // Prepare the chart data
             const chartData = {
-                labels: data.labels, // Weekly labels (e.g., "Week 1", "Week 2", ...)
+                labels: weekLabels, // Formatted week labels
                 datasets: data.datasets.map((dataset, index) => ({
                     label: dataset.label,
                     data: dataset.data.map(value => parseFloat(value) || 0), // Convert data to numbers
@@ -218,9 +220,9 @@ function indexChartWeek(restaurantId) {
                 window.myDoughnutChart.destroy();
             }
 
-            // Prepare Doughnut Chart Data
+            // Prepare Doughnut Chart Data (use first dataset for simplicity)
             const doughnutData = {
-                labels: data.labels, // Weekly labels
+                labels: weekLabels, // Weekly labels
                 datasets: [{
                     label: 'Weekly Breakdown',
                     data: data.datasets[0].data.map(value => parseFloat(value) || 0), // First dataset for simplicity
