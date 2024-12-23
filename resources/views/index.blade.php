@@ -187,8 +187,7 @@
                 <div class="row g-4 mb-4">
 
                     <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
-                        <div class="row mb-4">
-                            <div class="d-flex align-items-center">
+                        <div class="row mb-4 p-4">
                                 <div class="form-group me-3">
                                     <label for="filterYear">Year:</label>
                                     <select id="filterYear" class="form-control">
@@ -204,7 +203,7 @@
                                     </select>
                                 </div>
                                 <button id="filterButton" class="btn btn-primary mt-2">Apply Filters</button>
-                            </div>
+
                         </div>
                         <canvas id="myChart" style="width:100%;padding:10px;"></canvas>
                     </div><!--//app-card-->
