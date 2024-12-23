@@ -1,14 +1,15 @@
 let chartData = {}; // Variable to store pre-fetched data
 
+let year = 2024;
                     document.getElementById('filterButton').addEventListener('click', () => {
                         const reportType = document.getElementById('filterType').value;
-                        const year = document.getElementById("filterYear").value;
+                        year = document.getElementById("filterYear").value;
                         const weekRange = document.getElementById('weekRange').value.split('-').map(
                         Number); // Get week range as an array
                         filterDataAndRenderCharts(reportType, weekRange);
                     });
 
-                    var year = 2024;
+
 
                     function fetchDataOnce(restaurantId, year) {
 
