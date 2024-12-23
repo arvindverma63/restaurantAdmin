@@ -274,7 +274,11 @@
 
 
 <script>
-    console.log(localStorage.getItem('token'));
+    fetch('/getAuth')
+    .then(response=>response.json())
+    .then(data=>{
+        console.log(data);
+    })
 </script>
 
     </div><!--//app-wrapper-->
