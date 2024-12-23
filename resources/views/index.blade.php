@@ -184,30 +184,31 @@
                 </div><!--//row-->
 
 
-                <div class="row g-4 mb-4">
+                <div class="row g-4 mb-4" style="margin: 20px 0; gap: 20px;">
 
-                    <div class="app-card app-card-basic align-items-start shadow-sm">
-                        <div class="row mb-4 p-4" style="display: flex; flex-direction: row;">
-                                <div class="form-group me-3">
-                                    <label for="filterYear">Year:</label>
-                                    <select id="filterYear" class="form-control">
-                                        <option value="2023">2023</option>
-                                        <option value="2024" selected>2024</option>
-                                    </select>
-                                </div>
-                                <div class="form-group me-3">
-                                    <label for="filterType">Report Type:</label>
-                                    <select id="filterType" class="form-control">
-                                        <option value="weekly" selected>Weekly</option>
-                                        <option value="monthly">Monthly</option>
-                                    </select>
-                                </div>
-                                <button id="filterButton" class="btn btn-primary mt-2 text-white">Apply Filters</button>
-
+                    <div class="app-card app-card-basic align-items-start shadow-sm" style="border: 1px solid #ddd; border-radius: 8px; padding: 20px; background-color: #f9f9f9;">
+                        <div class="row mb-4 p-4" style="display: flex; flex-direction: row; align-items: center; gap: 15px; padding: 0;">
+                            <div class="form-group me-3" style="display: flex; flex-direction: column; min-width: 150px;">
+                                <label for="filterYear" style="font-weight: bold; margin-bottom: 5px;">Year:</label>
+                                <select id="filterYear" class="form-control" style="border: 1px solid #ccc; border-radius: 4px; padding: 5px;">
+                                    <option value="2023">2023</option>
+                                    <option value="2024" selected>2024</option>
+                                </select>
+                            </div>
+                            <div class="form-group me-3" style="display: flex; flex-direction: column; min-width: 150px;">
+                                <label for="filterType" style="font-weight: bold; margin-bottom: 5px;">Report Type:</label>
+                                <select id="filterType" class="form-control" style="border: 1px solid #ccc; border-radius: 4px; padding: 5px;">
+                                    <option value="weekly" selected>Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                </select>
+                            </div>
+                            <button id="filterButton" class="btn btn-primary mt-2 text-white" style="padding: 8px 15px; background-color: #007bff; border: none; border-radius: 4px; cursor: pointer;">Apply Filters</button>
                         </div>
-                        <canvas id="myChart" style="width:100%;padding:10px;"></canvas>
+                        <canvas id="myChart" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #fff;"></canvas>
                     </div><!--//app-card-->
+
                 </div>
+
 
 
                 <script>
