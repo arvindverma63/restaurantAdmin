@@ -181,126 +181,184 @@
                         </div><!--//app-card-->
                     </div><!--//col-->
                 </div><!--//row-->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="d-flex align-items-center">
+                            <div class="form-group me-3">
+                                <label for="filterYear">Year:</label>
+                                <select id="filterYear" class="form-control">
+                                    <option value="2023">2023</option>
+                                    <option value="2024" selected>2024</option>
+                                </select>
+                            </div>
+                            <div class="form-group me-3">
+                                <label for="filterRestaurant">Restaurant:</label>
+                                <input id="filterRestaurant" type="text" class="form-control"
+                                    placeholder="Enter Restaurant ID" value="R1732246184" />
+                            </div>
+                            <div class="form-group me-3">
+                                <label for="filterType">Report Type:</label>
+                                <select id="filterType" class="form-control">
+                                    <option value="weekly" selected>Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                </select>
+                            </div>
+                            <button id="filterButton" class="btn btn-primary mt-2">Apply Filters</button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row g-4 mb-4">
                     <div class="col-12 col-lg-6">
                         <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
-                            <canvas id="myChart-week" style="width:100%;max-width:700px;padding:10px;"></canvas>
+                            <canvas id="myChart" style="width:100%;max-width:700px;padding:10px;"></canvas>
                         </div><!--//app-card-->
                     </div><!--//col-->
                     <div class="col-12 col-lg-6">
                         <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
-                            <canvas id="myDoughnutChart-week" style="width:100%;max-width:700px;padding:10px;"></canvas>
+                            <canvas id="myDoughnutChart" style="width:100%;max-width:700px;padding:10px;"></canvas>
                         </div><!--//app-card-->
                     </div><!--//col-->
-                </div><!--//row-->
+                </div>
+
 
                 <script>
-                function indexChartWeek(restaurantId) {
-                    if (!restaurantId) {
-                        console.error('Restaurant ID is required.');
-                        return;
+                    let chartData = {}; // Variable to store pre-fetched data
+
+                    document.getElementById('filterButton').addEventListener('click', () => {
+                        const reportType = document.getElementById('filterType').value;
+                        filterDataAndRenderCharts(reportType);
+                    });
+
+                    function fetchDataOnce(restaurantId, year) {
+                        fetch(`https://rest.dicui.org/api/dashboard/weekly-chart-data?year=${year}&restaurantId=${restaurantId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                chartData = data; // Store the full dataset for later filtering
+                                filterDataAndRenderCharts('weekly'); // Render the default view (weekly)
+                            })
+                            .catch(error => {
+                                console.error('Error fetching the chart data:', error);
+                            });
                     }
 
-                    const brightColors = [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ];
-                    const brightBackgroundColors = brightColors.map(color => color.replace('1)', '0.2)'));
+                    function filterDataAndRenderCharts(reportType) {
+                        if (!chartData.labels || !chartData.datasets) {
+                            console.error('No data available for filtering.');
+                            return;
+                        }
 
-                    fetch(`https://rest.dicui.org/api/dashboard/weekly-chart-data?year=2024&restaurantId=${restaurantId}`)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (!data.labels || !data.datasets) {
-                                console.error('Invalid data format:', data);
-                                return;
-                            }
+                        let filteredLabels = [];
+                        let filteredDatasets = [];
 
-                            const chartData = {
-                                labels: data.labels,
-                                datasets: data.datasets.map((dataset, index) => ({
-                                    label: dataset.label,
-                                    data: dataset.data.map(value => parseFloat(value) || 0),
-                                    borderColor: brightColors[index % brightColors.length],
-                                    backgroundColor: brightBackgroundColors[index % brightBackgroundColors.length],
-                                    fill: false
-                                }))
-                            };
+                        if (reportType === 'weekly') {
+                            filteredLabels = chartData.labels; // Weekly labels (e.g., "Week 1", "Week 2", ...)
+                            filteredDatasets = chartData.datasets.map(dataset => ({
+                                ...dataset,
+                                data: dataset.data // Use the full weekly data
+                            }));
+                        } else if (reportType === 'monthly') {
+                            // Group data into months by summing every 4 weeks
+                            filteredLabels = ['Month 1', 'Month 2', 'Month 3', 'Month 4', 'Month 5', 'Month 6', 'Month 7', 'Month 8',
+                                'Month 9', 'Month 10', 'Month 11', 'Month 12'
+                            ];
+                            filteredDatasets = chartData.datasets.map(dataset => {
+                                const monthlyData = Array(12).fill(0);
+                                dataset.data.forEach((value, index) => {
+                                    const monthIndex = Math.floor(index / 4); // Group every 4 weeks into a month
+                                    if (monthIndex < 12) monthlyData[monthIndex] += parseFloat(value) || 0;
+                                });
+                                return {
+                                    ...dataset,
+                                    data: monthlyData
+                                };
+                            });
+                        }
 
-                            const ctxBar = document.getElementById('myChart-week').getContext('2d');
-                            if (window.myBarChart) {
-                                window.myBarChart.destroy();
-                            }
-                            window.myBarChart = new Chart(ctxBar, {
-                                type: 'bar',
-                                data: chartData,
-                                options: {
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top'
-                                        },
+                        renderCharts(filteredLabels, filteredDatasets, reportType);
+                    }
+
+                    function renderCharts(labels, datasets, reportType) {
+                        const brightColors = [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ];
+                        const brightBackgroundColors = brightColors.map(color => color.replace('1)', '0.2)'));
+
+                        const ctxBar = document.getElementById('myChart').getContext('2d');
+                        if (window.myBarChart) {
+                            window.myBarChart.destroy();
+                        }
+                        window.myBarChart = new Chart(ctxBar, {
+                            type: 'bar',
+                            data: {
+                                labels,
+                                datasets
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        position: 'top'
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: `${reportType.charAt(0).toUpperCase() + reportType.slice(1)} Data Overview`
+                                    }
+                                },
+                                scales: {
+                                    x: {
                                         title: {
                                             display: true,
-                                            text: 'Weekly Data Overview'
+                                            text: reportType === 'weekly' ? 'Week' : 'Month'
                                         }
                                     },
-                                    scales: {
-                                        x: {
-                                            title: {
-                                                display: true,
-                                                text: 'Week'
-                                            }
-                                        },
-                                        y: {
-                                            title: {
-                                                display: true,
-                                                text: 'Values'
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-
-                            const doughnutCtx = document.getElementById('myDoughnutChart-week').getContext('2d');
-                            if (window.myDoughnutChart) {
-                                window.myDoughnutChart.destroy();
-                            }
-                            const doughnutData = {
-                                labels: data.labels,
-                                datasets: [{
-                                    label: 'Weekly Breakdown',
-                                    data: data.datasets[0].data.map(value => parseFloat(value) || 0),
-                                    backgroundColor: brightColors
-                                }]
-                            };
-                            window.myDoughnutChart = new Chart(doughnutCtx, {
-                                type: 'doughnut',
-                                data: doughnutData,
-                                options: {
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top'
-                                        },
+                                    y: {
                                         title: {
                                             display: true,
-                                            text: 'Doughnut Chart - Weekly Data'
+                                            text: 'Values'
                                         }
                                     }
                                 }
-                            });
-                        })
-                        .catch(error => {
-                            console.error('Error fetching the chart data:', error);
+                            }
                         });
-                }
 
-                // Call the function with your restaurant ID
-                indexChartWeek('R1732246184');
+                        const doughnutCtx = document.getElementById('myDoughnutChart').getContext('2d');
+                        if (window.myDoughnutChart) {
+                            window.myDoughnutChart.destroy();
+                        }
+                        const doughnutData = {
+                            labels,
+                            datasets: [{
+                                label: `${reportType.charAt(0).toUpperCase() + reportType.slice(1)} Breakdown`,
+                                data: datasets[0].data,
+                                backgroundColor: brightColors
+                            }]
+                        };
+                        window.myDoughnutChart = new Chart(doughnutCtx, {
+                            type: 'doughnut',
+                            data: doughnutData,
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    legend: {
+                                        position: 'top'
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: `Doughnut Chart - ${reportType.charAt(0).toUpperCase() + reportType.slice(1)} Data`
+                                    }
+                                }
+                            }
+                        });
+                    }
+
+                    // Fetch data once and initialize charts
+                    fetchDataOnce('R1732246184', '2024');
                 </script>
 
 
@@ -308,7 +366,7 @@
         </div><!--//app-content-->
 
 
-        <script type="text/javascript" src="{{asset('assets/js/index-charts.js')}}?v={{time()}}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/index-charts.js') }}?v={{ time() }}"></script>
 
     </div><!--//app-wrapper-->
     @include('partials.footer')
