@@ -1,5 +1,5 @@
 
-const ctx = document.getElementById('myChart').getContext('2d');
+const ctx = document.getElementById('myChart-year').getContext('2d');
 
 fetch('/getAuth')
 .then(response=>response.json())
@@ -95,7 +95,7 @@ fetch('https://rest.dicui.org/api/dashboard/chart-data?year=2024&restaurantId='+
         });
 
         // Create a doughnut chart
-        const doughnutCtx = document.getElementById('myDoughnutChart').getContext('2d');
+        const doughnutCtx = document.getElementById('myDoughnutChart-year').getContext('2d');
         const doughnutData = {
             labels: data.labels,
             datasets: [{
