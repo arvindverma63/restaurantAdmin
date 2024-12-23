@@ -1,11 +1,12 @@
-const ctx = document.getElementById('myChart').getContext('2d');
 let restaurantId;
+
+const ctx = document.getElementById('myChart').getContext('2d');
 
 fetch('/getAuth')
 .then(response=>response.json())
 .then(data=>{
     restaurantId = data.restaurantId;
-})
+});
 
 // Define a set of bright colors explicitly
 const brightColors = [
