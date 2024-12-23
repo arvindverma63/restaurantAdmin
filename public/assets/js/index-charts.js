@@ -5,6 +5,7 @@ const ctx = document.getElementById('myChart').getContext('2d');
 fetch('/getAuth')
 .then(response=>response.json())
 .then(data=>{
+    console.log(data);
     restaurantId = data.restaurantId;
 });
 
