@@ -1,6 +1,6 @@
 let chartData = {}; // Variable to store pre-fetched data
 
-let year = 2024;
+var year = currentTime.getFullYear();
                     document.getElementById('filterButton').addEventListener('click', () => {
                         const reportType = document.getElementById('filterType').value;
                         year = document.getElementById("filterYear").value;
