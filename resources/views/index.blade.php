@@ -168,7 +168,7 @@
                     </div>
                 </div>
 
-                <script src="{{ asset('assets/js/reports/stats.js') }}?v={{time()}}"></script>
+                <script src="{{ asset('assets/js/reports/stats.js') }}?v={{ time() }}"></script>
                 <div class="row g-4 mb-4">
                     <div class="col-12 col-lg-4">
                         <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
@@ -199,72 +199,20 @@
                             </div><!--//app-card-body-->
                             <div class="app-card-footer p-4 mt-auto">
                                 @include('components.till.invoice')
-                                <a class="btn app-btn-secondary" data-bs-toggle="modal" data-bs-target="#invoiceModal">Create New</a>
+                                <a class="btn app-btn-secondary" data-bs-toggle="modal"
+                                    data-bs-target="#invoiceModal">Create New</a>
                             </div><!--//app-card-footer-->
                         </div><!--//app-card-->
                     </div><!--//col-->
                     <div class="col-12 col-lg-4">
                         <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
-                            <div class="app-card-header p-3 border-bottom-0">
-                                <div class="row align-items-center gx-3">
-                                    <div class="col-auto">
-                                        <div class="app-icon-holder">
-                                            <svg width="1em" height="1em" viewBox="0 0 16 16"
-                                                class="bi bi-code-square" fill="currentColor"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd"
-                                                    d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-                                                <path fill-rule="evenodd"
-                                                    d="M6.854 4.646a.5.5 0 0 1 0 .708L4.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0zm2.292 0a.5.5 0 0 0 0 .708L11.793 8l-2.647 2.646a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708 0z" />
-                                            </svg>
-                                        </div><!--//icon-holder-->
-
-                                    </div><!--//col-->
-                                    <div class="col-auto">
-                                        <h4 class="app-card-title">Apps</h4>
-                                    </div><!--//col-->
-                                </div><!--//row-->
-                            </div><!--//app-card-header-->
-                            <div class="app-card-body px-4">
-
-                                <div class="intro">Pellentesque varius, elit vel volutpat sollicitudin, lacus quam
-                                    efficitur augue</div>
-                            </div><!--//app-card-body-->
-                            <div class="app-card-footer p-4 mt-auto">
-                                <a class="btn app-btn-secondary" href="#">Create New</a>
-                            </div><!--//app-card-footer-->
+                            <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
                         </div><!--//app-card-->
                     </div><!--//col-->
                     <div class="col-12 col-lg-4">
                         <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
-                            <div class="app-card-header p-3 border-bottom-0">
-                                <div class="row align-items-center gx-3">
-                                    <div class="col-auto">
-                                        <div class="app-icon-holder">
-                                            <svg width="1em" height="1em" viewBox="0 0 16 16"
-                                                class="bi bi-tools" fill="currentColor"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <path fill-rule="evenodd"
-                                                    d="M0 1l1-1 3.081 2.2a1 1 0 0 1 .419.815v.07a1 1 0 0 0 .293.708L10.5 9.5l.914-.305a1 1 0 0 1 1.023.242l3.356 3.356a1 1 0 0 1 0 1.414l-1.586 1.586a1 1 0 0 1-1.414 0l-3.356-3.356a1 1 0 0 1-.242-1.023L9.5 10.5 3.793 4.793a1 1 0 0 0-.707-.293h-.071a1 1 0 0 1-.814-.419L0 1zm11.354 9.646a.5.5 0 0 0-.708.708l3 3a.5.5 0 0 0 .708-.708l-3-3z" />
-                                                <path fill-rule="evenodd"
-                                                    d="M15.898 2.223a3.003 3.003 0 0 1-3.679 3.674L5.878 12.15a3 3 0 1 1-2.027-2.027l6.252-6.341A3 3 0 0 1 13.778.1l-2.142 2.142L12 4l1.757.364 2.141-2.141zm-13.37 9.019L3.001 11l.471.242.529.026.287.445.445.287.026.529L5 13l-.242.471-.026.529-.445.287-.287.445-.529.026L3 15l-.471-.242L2 14.732l-.287-.445L1.268 14l-.026-.529L1 13l.242-.471.026-.529.445-.287.287-.445.529-.026z" />
-                                            </svg>
-                                        </div><!--//icon-holder-->
 
-                                    </div><!--//col-->
-                                    <div class="col-auto">
-                                        <h4 class="app-card-title">Tools</h4>
-                                    </div><!--//col-->
-                                </div><!--//row-->
-                            </div><!--//app-card-header-->
-                            <div class="app-card-body px-4">
-
-                                <div class="intro">Sed maximus, libero ac pharetra elementum, turpis nisi molestie
-                                    neque, et tincidunt velit turpis non enim.</div>
-                            </div><!--//app-card-body-->
-                            <div class="app-card-footer p-4 mt-auto">
-                                <a class="btn app-btn-secondary" href="#">Create New</a>
-                            </div><!--//app-card-footer-->
+                            <canvas id="myDoughnutChart" style="width:100%;max-width:700px"></canvas>
                         </div><!--//app-card-->
                     </div><!--//col-->
                 </div><!--//row-->
@@ -273,13 +221,90 @@
         </div><!--//app-content-->
 
 
-<script>
-    fetch('/getAuth')
-    .then(response=>response.json())
-    .then(data=>{
-        console.log(data);
-    })
-</script>
+        <script type="text/javascript">
+            const ctx = document.getElementById('myChart').getContext('2d');
+
+            // Fetch data from the API
+            fetch('https://rest.dicui.org/api/dashboard/chart-data?year=2024&restaurantId=R1732246184')
+                .then(response => response.json())
+                .then(data => {
+                    const chartData = {
+                        labels: data.labels,
+                        datasets: data.datasets.map(dataset => ({
+                            label: dataset.label,
+                            data: dataset.data.map(value => parseFloat(value) ||
+                            0), // Convert strings to numbers
+                            borderColor: dataset.borderColor,
+                            backgroundColor: dataset.backgroundColor,
+                            fill: dataset.fill
+                        }))
+                    };
+
+                    // Create a bar chart
+                    const myBarChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: chartData,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top'
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Monthly Data Overview'
+                                }
+                            },
+                            scales: {
+                                x: {
+                                    title: {
+                                        display: true,
+                                        text: 'Month'
+                                    }
+                                },
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Values'
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                    // Create a doughnut chart
+                    const doughnutCtx = document.getElementById('myDoughnutChart').getContext('2d');
+                    const doughnutData = {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Doughnut Data',
+                            data: data.datasets[0].data.map(value => parseFloat(value) ||
+                            0), // Use the first dataset for simplicity
+                            backgroundColor: data.datasets[0].backgroundColor
+                        }]
+                    };
+
+                    const myDoughnutChart = new Chart(doughnutCtx, {
+                        type: 'doughnut',
+                        data: doughnutData,
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top'
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Doughnut Chart Example'
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching the chart data:', error);
+                });
+        </script>
 
     </div><!--//app-wrapper-->
     @include('partials.footer')
