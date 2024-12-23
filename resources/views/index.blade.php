@@ -186,28 +186,52 @@
 
                 <div class="row g-4 mb-4" style="margin: 20px 0; gap: 20px;">
 
-                    <div class="app-card app-card-basic align-items-start shadow-sm" style="border: 1px solid #ddd; border-radius: 8px; padding: 20px; background-color: #f9f9f9;">
-                        <div class="row mb-4 p-4" style="display: flex; flex-direction: row; align-items: center; gap: 15px; padding: 0;">
-                            <div class="form-group me-3" style="display: flex; flex-direction: column; min-width: 150px;">
+                    <div class="app-card app-card-basic align-items-start shadow-sm"
+                        style="border: 1px solid #ddd; border-radius: 8px; padding: 20px; background-color: #f9f9f9;">
+                        <div class="row mb-4 p-4"
+                            style="display: flex; flex-direction: row; align-items: center; gap: 15px; padding: 0;">
+                            <div class="form-group me-3"
+                                style="display: flex; flex-direction: column; min-width: 150px;">
                                 <label for="filterYear" style="font-weight: bold; margin-bottom: 5px;">Year:</label>
-                                <select id="filterYear" class="form-control" style="border: 1px solid #ccc; border-radius: 4px; padding: 5px;">
+                                <select id="filterYear" class="form-control"
+                                    style="border: 1px solid #ccc; border-radius: 4px; padding: 5px;">
                                     <option value="2023">2023</option>
                                     <option value="2024" selected>2024</option>
                                 </select>
                             </div>
-                            <div class="form-group me-3" style="display: flex; flex-direction: column; min-width: 150px;">
-                                <label for="filterType" style="font-weight: bold; margin-bottom: 5px;">Report Type:</label>
-                                <select id="filterType" class="form-control" style="border: 1px solid #ccc; border-radius: 4px; padding: 5px;">
+                            <div class="form-group me-3"
+                                style="display: flex; flex-direction: column; min-width: 150px;">
+                                <label for="filterType" style="font-weight: bold; margin-bottom: 5px;">Report
+                                    Type:</label>
+                                <select id="filterType" class="form-control"
+                                    style="border: 1px solid #ccc; border-radius: 4px; padding: 5px;">
                                     <option value="weekly" selected>Weekly</option>
                                     <option value="monthly">Monthly</option>
                                 </select>
                             </div>
-                            <button id="filterButton" class="btn btn-primary mt-2 text-white" style="padding: 8px 15px; background-color: #007bff; border: none; border-radius: 4px; cursor: pointer;">Apply Filters</button>
+                            <div class="form-group me-3"
+                                style="display: flex; flex-direction: column; min-width: 150px;">
+                                <label for="weekRange" style="font-weight: bold; margin-bottom: 5px;">Week
+                                    Range:</label>
+                                <select id="weekRange" class="form-control"
+                                    style="border: 1px solid #ccc; border-radius: 4px; padding: 5px;">
+                                    <option value="1-10">Week 1-10</option>
+                                    <option value="11-20">Week 11-20</option>
+                                    <option value="21-30">Week 21-30</option>
+                                    <option value="31-40">Week 31-40</option>
+                                    <option value="41-52">Week 41-52</option>
+                                </select>
+                            </div>
+                            <button id="filterButton" class="btn btn-primary mt-2 text-white"
+                                style="padding: 8px 15px; background-color: #007bff; border: none; border-radius: 4px; cursor: pointer;">Apply
+                                Filters</button>
                         </div>
-                        <canvas id="myChart" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #fff;"></canvas>
+                        <canvas id="myChart"
+                            style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #fff;"></canvas>
                     </div><!--//app-card-->
 
                 </div>
+
 
 
 
@@ -216,7 +240,9 @@
 
                     document.getElementById('filterButton').addEventListener('click', () => {
                         const reportType = document.getElementById('filterType').value;
-                        filterDataAndRenderCharts(reportType);
+                        const weekRange = document.getElementById('weekRange').value.split('-').map(
+                        Number); // Get week range as an array
+                        filterDataAndRenderCharts(reportType, weekRange);
                     });
 
                     function fetchDataOnce(restaurantId, year) {
@@ -224,14 +250,14 @@
                             .then(response => response.json())
                             .then(data => {
                                 chartData = data; // Store the full dataset for later filtering
-                                filterDataAndRenderCharts('weekly'); // Render the default view (weekly)
+                                filterDataAndRenderCharts('weekly', [1, 10]); // Render the default view (Week 1-10)
                             })
                             .catch(error => {
                                 console.error('Error fetching the chart data:', error);
                             });
                     }
 
-                    function filterDataAndRenderCharts(reportType) {
+                    function filterDataAndRenderCharts(reportType, weekRange) {
                         if (!chartData.labels || !chartData.datasets) {
                             console.error('No data available for filtering.');
                             return;
@@ -241,13 +267,19 @@
                         let filteredDatasets = [];
 
                         if (reportType === 'weekly') {
-                            filteredLabels = chartData.labels; // Weekly labels (e.g., "Week 1", "Week 2", ...)
+                            filteredLabels = chartData.labels.filter((label, index) => {
+                                const week = index + 1;
+                                return week >= weekRange[0] && week <= weekRange[1];
+                            });
+
                             filteredDatasets = chartData.datasets.map(dataset => ({
                                 ...dataset,
-                                data: dataset.data // Use the full weekly data
+                                data: dataset.data.filter((_, index) => {
+                                    const week = index + 1;
+                                    return week >= weekRange[0] && week <= weekRange[1];
+                                })
                             }));
                         } else if (reportType === 'monthly') {
-                            // Group data into months by summing every 4 weeks
                             filteredLabels = ['Month 1', 'Month 2', 'Month 3', 'Month 4', 'Month 5', 'Month 6', 'Month 7', 'Month 8',
                                 'Month 9', 'Month 10', 'Month 11', 'Month 12'
                             ];
@@ -311,35 +343,6 @@
                                             display: true,
                                             text: 'Values'
                                         }
-                                    }
-                                }
-                            }
-                        });
-
-                        const doughnutCtx = document.getElementById('myDoughnutChart').getContext('2d');
-                        if (window.myDoughnutChart) {
-                            window.myDoughnutChart.destroy();
-                        }
-                        const doughnutData = {
-                            labels,
-                            datasets: [{
-                                label: `${reportType.charAt(0).toUpperCase() + reportType.slice(1)} Breakdown`,
-                                data: datasets[0].data,
-                                backgroundColor: brightColors
-                            }]
-                        };
-                        window.myDoughnutChart = new Chart(doughnutCtx, {
-                            type: 'doughnut',
-                            data: doughnutData,
-                            options: {
-                                responsive: true,
-                                plugins: {
-                                    legend: {
-                                        position: 'top'
-                                    },
-                                    title: {
-                                        display: true,
-                                        text: `Doughnut Chart - ${reportType.charAt(0).toUpperCase() + reportType.slice(1)} Data`
                                     }
                                 }
                             }
