@@ -209,16 +209,9 @@
                 </div>
 
                 <div class="row g-4 mb-4">
-                    <div class="col-12 col-lg-6">
                         <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
                             <canvas id="myChart" style="width:100%;max-width:700px;padding:10px;"></canvas>
                         </div><!--//app-card-->
-                    </div><!--//col-->
-                    <div class="col-12 col-lg-6">
-                        <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
-                            <canvas id="myDoughnutChart" style="width:100%;max-width:700px;padding:10px;"></canvas>
-                        </div><!--//app-card-->
-                    </div><!--//col-->
                 </div>
 
 
