@@ -1,7 +1,11 @@
 
 const ctx = document.getElementById('myChart').getContext('2d');
 
-console.log(restaurantId);
+fetch('/getAuth')
+.then(response=>response.json())
+.then(data=>{
+    indexChart(data.restaurantId);
+})
 
 // Define a set of bright colors explicitly
 const brightColors = [
@@ -22,6 +26,7 @@ const brightBackgroundColors = [
     'rgba(255, 159, 64, 0.5)' // Transparent Bright Orange
 ];
 
+function indexChart(restaurantId){
 // Fetch data from the API
 fetch('https://rest.dicui.org/api/dashboard/chart-data?year=2024&restaurantId='+restaurantId)
     .then(response => response.json())
@@ -107,3 +112,7 @@ fetch('https://rest.dicui.org/api/dashboard/chart-data?year=2024&restaurantId='+
     .catch(error => {
         console.error('Error fetching the chart data:', error);
     });
+
+}
+
+indexChart();
