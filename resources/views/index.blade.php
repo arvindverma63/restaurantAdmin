@@ -273,7 +273,9 @@
         </div><!--//app-content-->
 
 
-
+<script>
+    console.log(localStorage.getItem('token'));
+</script>
 
     </div><!--//app-wrapper-->
     @include('partials.footer')
