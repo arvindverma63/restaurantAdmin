@@ -1,4 +1,11 @@
 const ctx = document.getElementById('myChart').getContext('2d');
+let restaurantId;
+
+fetch('/getAuth')
+.then(response=>response.json())
+.then(data=>{
+    restaurantId = data.restaurantId;
+})
 
 // Define a set of bright colors explicitly
 const brightColors = [
@@ -20,7 +27,7 @@ const brightBackgroundColors = [
 ];
 
 // Fetch data from the API
-fetch('https://rest.dicui.org/api/dashboard/chart-data?year=2024&restaurantId=R1732246184')
+fetch('https://rest.dicui.org/api/dashboard/chart-data?year=2024&restaurantId='+restaurantId)
     .then(response => response.json())
     .then(data => {
         // Ensure data.labels and data.datasets exist
