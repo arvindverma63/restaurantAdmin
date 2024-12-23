@@ -51,7 +51,7 @@ function filterDataAndRenderCharts(reportType, weekRange) {
             })
         }));
     } else if (reportType === 'monthly') {
-        filteredLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dev'];
+        filteredLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         filteredDatasets = chartData.datasets.map(dataset => {
             const monthlyData = Array(12).fill(0);
