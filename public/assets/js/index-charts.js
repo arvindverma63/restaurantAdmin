@@ -7,7 +7,7 @@ fetch('/getAuth')
 .then(data=>{
     console.log(data);
     restaurantId = data.restaurantId;
-});
+})
 
 // Define a set of bright colors explicitly
 const brightColors = [
