@@ -66,6 +66,7 @@ class SessionController extends Controller
                     'itemName' => $request->input('itemName'),
                     'price' => $request->input('price'),
                     'quantity' => 1,
+                    'created_at' => now()
                 ];
             }
 

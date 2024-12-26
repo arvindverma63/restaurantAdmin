@@ -1,4 +1,5 @@
 let menus = [];
+let firstItemAddedToCartTimeElement = document.querySelector('#till-first-item');
 
 // Fetch and render menus
 fetch('/get/menu/data')
@@ -32,6 +33,13 @@ document.getElementById('menu-search').addEventListener('input', function () {
 function renderMenus(filteredMenus) {
     const productContainer = document.getElementById('product-container');
     productContainer.innerHTML = ''; // Clear existing content
+
+    let cartItemsAvailable = document.querySelector('.item-of-cart');
+    if(!cartItemsAvailable){
+        firstItemAddedToCartTimeElement.classList.add('hide');
+    }else{
+        firstItemAddedToCartTimeElement.classList.remove('hide');
+    }
 
     if (filteredMenus.length > 0) {
         filteredMenus.forEach(menu => {
@@ -97,6 +105,7 @@ function sendData(data) {
         .then(responseData => {
             console.log('Data successfully sent to the server:', responseData);
 
+
             // Validate response structure
             if (!responseData || !responseData.data || !responseData.data.items) {
                 console.error('Invalid server response:', responseData);
@@ -118,7 +127,7 @@ function sendData(data) {
                 return;
             }
 
-            const { itemId, itemName, quantity, price } = item;
+            const { itemId, itemName, quantity, price, created_at } = item;
 
             // Update existing cart item or add a new one
             const existingCartItem = document.querySelector(`.cart-item[data-id="${itemId}"]`);
@@ -128,7 +137,7 @@ function sendData(data) {
             } else {
                 const cartContainer = document.querySelector('.cart-items');
                 const cartItemHTML = `
-                    <div class="cart-item d-flex justify-content-between align-items-center py-2 border-bottom" data-id="${itemId}">
+                    <div class="cart-item d-flex justify-content-between align-items-center py-2 border-bottom item-of-cart" data-time="${created_at}" data-id="${itemId}">
                         <div class="item-info">
                             <h6 class="mb-1">${itemName}
                                 <i class="fa-solid fa-circle-xmark" style="color: #ff0000; cursor: pointer;" onclick="removeItem(${itemId})"></i>
@@ -140,7 +149,16 @@ function sendData(data) {
                             <small class="text-muted item-subtotal">Subtotal: ₹${(price * quantity).toFixed(2)}</small>
                         </div>
                     </div>`;
-                cartContainer.insertAdjacentHTML('beforeend', cartItemHTML);
+                    // console.log("items; ", );
+
+                    cartContainer.insertAdjacentHTML('beforeend', cartItemHTML);
+                    firstItemAddedToCartTimeElement.setAttribute("data-time", itemsObject[0].created_at);
+                    let cartItemsAvailable = document.querySelector('.item-of-cart');
+                    if(!cartItemsAvailable){
+                        firstItemAddedToCartTimeElement.classList.add('hide');
+                    }else{
+                        firstItemAddedToCartTimeElement.classList.remove('hide');
+                    }
             }
 
             updateCartTotals(); // Update totals after adding the item
@@ -160,13 +178,14 @@ fetch('/getData/'+tableNumber)
 
         // Clear any existing cart items before adding new ones
         cartContainer.innerHTML = '';
+        const itemsObject = data.data.items || {};
 
         // Check if the items array exists and has data
         if (data && data.data && data.data.items && data.data.items.length > 0) {
             // Iterate through the items array and generate HTML for each item
             data.data.items.forEach(item => {
                 const cartItemHTML = `
-                    <div class="cart-item d-flex justify-content-between align-items-center py-2 border-bottom" data-id="${item.itemId}">
+                    <div class="cart-item d-flex justify-content-between align-items-center py-2 border-bottom item-of-cart" data-time="${item.created_at}"  data-id="${item.itemId}">
                         <div class="item-info">
                             <h6 class="mb-1">${item.itemName}
                                 <i class="fa-solid fa-circle-xmark" style="color: #ff0000; cursor: pointer;" onclick="removeItem(${item.itemId})"></i>
@@ -178,7 +197,16 @@ fetch('/getData/'+tableNumber)
                             <small class="text-muted item-subtotal">Subtotal: ₹${(item.price * item.quantity).toFixed(2)}</small>
                         </div>
                     </div>`;
+
+
                 cartContainer.insertAdjacentHTML('beforeend', cartItemHTML);
+                let cartItemsAvailable = document.querySelector('.item-of-cart');
+                    if(!cartItemsAvailable){
+                        firstItemAddedToCartTimeElement.classList.add('hide');
+                    }else{
+                        firstItemAddedToCartTimeElement.classList.remove('hide');
+                    }
+                firstItemAddedToCartTimeElement.setAttribute("data-time", itemsObject[0].created_at);
             });
             updateCartTotals(); // Update totals after rendering the cart items
         } else {
@@ -250,6 +278,16 @@ function removeItem(itemId) {
             const itemElement = document.querySelector(`.cart-item[data-id="${itemId}"]`);
             if (itemElement) {
                 itemElement.remove();
+                let firstCartItem = document.querySelector('.cart-items .item-of-cart');
+                console.log(firstCartItem);
+                let cartItemsAvailable = document.querySelector('.item-of-cart');
+                if(!cartItemsAvailable){
+                    firstItemAddedToCartTimeElement.classList.add('hide');
+                }else{
+                    firstItemAddedToCartTimeElement.classList.remove('hide');
+                }
+                firstItemAddedToCartTimeElement.setAttribute("data-time", firstCartItem.getAttribute('data-time'));
+
             } else {
                 console.warn(`Item with ID ${itemId} not found in the DOM.`);
             }

@@ -610,6 +610,7 @@ summary {
     cursor: pointer
 }
 
+
 progress {
     vertical-align: baseline
 }
@@ -15277,4 +15278,7 @@ button.close:focus {
 }
 .padding-loading-button{
     padding: 7px 11px;
+}
+.hide{
+    display: none;
 }

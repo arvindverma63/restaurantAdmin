@@ -99,6 +99,9 @@ if (customerListElement) {
             const customerId = target.getAttribute('data-id'); // Get customer ID from data attribute
             const customerName = target.getAttribute('data-name'); // Get customer name from data attribute
             addData(customerId, customerName);
+
+
+
         }
     });
 } else {
@@ -157,3 +160,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+
+function getFormattedTimestamp() {
+    const now = new Date();
+    return now.toISOString().replace('Z', '.000000Z');
+}
