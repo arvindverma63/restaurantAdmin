@@ -61,7 +61,7 @@ Route::middleware(['auth.token'])->group(function () {
     Route::put('/menu/{id}', [MenuController::class, 'updateMenuItem'])->name('menu.update');
 
     // Route for deleting menu item
-    Route::post('/menu/{id}', [MenuController::class, 'deleteMenuItem'])->name('menu.delete');
+    Route::get('/menu/{id}', [MenuController::class, 'deleteMenuItem'])->name('menu.delete');
     Route::get('/get/order', [OrderController::class, 'getOrders'])->name('getOrder');
     Route::get('/get/suppliers', [SupplierController::class, 'getSupplier'])->name('getSuppliers');
     Route::post('/orders/{id}/status', [OrderController::class, 'updateStatus'])->name('updateOrderStatus');

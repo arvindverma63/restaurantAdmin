@@ -29,7 +29,7 @@
                             <i class="fas fa-edit"></i> Edit
                         </a>
                         <!-- Delete Menu Form -->
-                        <form action="{{ url('/menu/'.$menuItem['id']) }}" method="POST" style="display:inline;">
+                        <form action="{{ url('/menu/'.$menuItem['id']) }}" method="get" style="display:inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger text-white" onclick="return confirm('Are you sure you want to delete this menu item?');">
