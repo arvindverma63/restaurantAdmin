@@ -249,14 +249,14 @@
 
                             <!-- Fetch Report Button -->
                             <div class="col-md-4 d-flex align-items-end">
-                                <button class="btn btn-primary w-100 text-white" onclick="fetchDataAndRenderChart()">Fetch Report</button>
+                                <button class="btn btn-primary w-100 text-white" onclick="fetchDataAndRenderChart({{Session::get('restaurant_id')}})">Fetch Report</button>
                             </div>
                         </div>
                     </div>
 
                     <div class="card-body">
                         <canvas id="paymentTypeChart" width="400" height="200"></canvas>
-                        <script src="{{asset('assets/js/reports/paymentType.js')}}?v={{time()}}"></script>
+
                     </div>
                 </div>
 
@@ -275,6 +275,7 @@
 
         <script type="text/javascript" src="{{ asset('assets/js/index-charts.js') }}?v={{ time() }}"></script>
         <script src="{{ asset('assets/js/index-chart-2.js') }}?v={{ time() }}"></script>
+        <script src="{{asset('assets/js/reports/paymentType.js')}}?v={{time()}}"></script>
     </div><!--//app-wrapper-->
     @include('partials.footer')
 </body>

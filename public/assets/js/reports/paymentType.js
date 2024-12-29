@@ -16,7 +16,7 @@
    });
 
 
-   async function fetchDataAndRenderChart() {
+   async function fetchDataAndRenderChart(restaurantId) {
        const apiUrl = 'https://rest.dicui.org/api/getReportPaymentType';
 
        // Get selected dates
@@ -34,7 +34,7 @@
        const requestData = {
            startDate: startDate,
            endDate: endDate,
-           restaurantId: "R1732246184" // Replace with dynamic restaurantId if needed
+           restaurantId: restaurantId // Replace with dynamic restaurantId if needed
        };
 
        try {
