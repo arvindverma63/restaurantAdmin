@@ -79,7 +79,7 @@
                                     <!-- Item Image Field -->
                                     <div class="mb-3">
                                         <label for="itemImage" class="form-label">Item Image</label>
-                                        <input type="file" class="form-control" id="itemImage" name="itemImage" accept="image/jpeg, image/png, image/jpg, image/gif">
+                                        <input type="file" class="form-control" id="itemImage" name="itemImage" value="{{ $menuItem['itemImage'] }}" accept="image/jpeg, image/png, image/jpg, image/gif">
                                         @if($menuItem['itemImage'])
                                             <div class="mt-2">
                                                 <img src="{{ $menuItem['itemImage'] }}" alt="Current Image" style="width: 100px; height: auto;">
