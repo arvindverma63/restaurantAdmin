@@ -233,6 +233,8 @@
                 </div>
 
                 <div class="card-container p-4 card">
+                    <h4>Get Report by Payment Type</h4><br>
+                    <span class="text-danger"><i>Select start date and end to get Report</i></span><br>
                     <div class="card-head mb-4">
                         <div class="row">
                             <!-- Start Date Picker -->
