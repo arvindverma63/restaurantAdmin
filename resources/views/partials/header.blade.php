@@ -189,7 +189,7 @@
             <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
             <div class="app-branding">
                 <a class="app-logo" href="{{ route('dashboard') }}"><img class="logo-icon me-2"
-                        src="assets/images/dq.png" style="border-radius: 50%;" alt="logo"><span class="logo-text">DQ</span></a>
+                        src="{{asset('assets/images/dq.png')}}" style="border-radius: 50%;" alt="logo"><span class="logo-text">DQ</span></a>
 
             </div><!--//app-branding-->
 
