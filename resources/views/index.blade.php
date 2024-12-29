@@ -249,7 +249,7 @@
 
                             <!-- Fetch Report Button -->
                             <div class="col-md-4 d-flex align-items-end">
-                                <button class="btn btn-primary w-100 text-white" onclick="fetchDataAndRenderChart({{Session::get('restaurant_id')}})">Fetch Report</button>
+                                <button class="btn btn-primary w-100 text-white" onclick="fetchDataAndRenderChart('{{Session::get('restaurant_id')}}')">Fetch Report</button>
                             </div>
                         </div>
                     </div>
