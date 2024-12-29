@@ -101,4 +101,6 @@ Route::middleware(['auth.token'])->group(function () {
     Route::get('/getNotification',[OrderController::class,'getNotification']);
     Route::get('/dailyReportTable',[PageController::class,'dailyReportTable'])->name('dailyReport');
     Route::get('/paymentTypeReport',[PageController::class,'paymentReport'])->name('paymentReport');
+
+    Route::get('/feedback/page',[PageController::class,'feedbackPage'])->name('feedback');
 });

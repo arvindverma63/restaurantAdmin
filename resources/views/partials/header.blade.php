@@ -273,6 +273,15 @@
                     </li><!--//nav-item-->
                     <li class="nav-item">
                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                        <a class="nav-link {{ Route::is('feedback') ? 'active' : '' }}" href="{{ route('feedback') }}">
+                            <span class="nav-icon">
+                                <i class="fa-regular fa-comment"></i>
+                            </span>
+                            <span class="nav-link-text">Feedbacks</span>
+                        </a><!--//nav-link-->
+                    </li><!--//nav-item-->
+                    <li class="nav-item">
+                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                         <a class="nav-link {{ Route::is('qr') ? 'active' : '' }}" href="{{ route('qr') }}">
                             <span class="nav-icon">
                                 <i class="fa-solid fa-qrcode"></i>
