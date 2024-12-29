@@ -232,6 +232,85 @@
 
                 </div>
 
+                <div class="card-container p-4">
+                    <canvas id="paymentTypeChart" width="400" height="200"></canvas>
+
+                    <script>
+                        async function fetchDataAndRenderChart() {
+                            const apiUrl = 'https://rest.dicui.org/api/getReportPaymentType';
+
+                            // Example payload for the POST request
+                            const requestData = {
+                                startDate: "2024-12-01",
+                                endDate: "2024-12-10",
+                                restaurantId: 123
+                            };
+
+                            try {
+                                // Fetch data from the API
+                                const response = await fetch(apiUrl, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(requestData)
+                                });
+
+                                const data = await response.json();
+                                if (data.status === 'success') {
+                                    const chartData = data.data;
+
+                                    // Extract labels and values for the chart
+                                    const labels = chartData.map(item => item.payment_type);
+                                    const totalCounts = chartData.map(item => item.total_count);
+                                    const totalAmounts = chartData.map(item => item.total_amount);
+
+                                    // Render the chart
+                                    const ctx = document.getElementById('paymentTypeChart').getContext('2d');
+                                    new Chart(ctx, {
+                                        type: 'bar',
+                                        data: {
+                                            labels: labels,
+                                            datasets: [
+                                                {
+                                                    label: 'Total Transactions',
+                                                    data: totalCounts,
+                                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                                    borderWidth: 1
+                                                },
+                                                {
+                                                    label: 'Total Amount (₹)',
+                                                    data: totalAmounts,
+                                                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                                                    borderColor: 'rgba(153, 102, 255, 1)',
+                                                    borderWidth: 1
+                                                }
+                                            ]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            scales: {
+                                                y: {
+                                                    beginAtZero: true
+                                                }
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    console.error('Failed to fetch data:', data);
+                                }
+                            } catch (error) {
+                                console.error('Error fetching data:', error);
+                            }
+                        }
+
+                        // Call the function to fetch data and render the chart
+                        fetchDataAndRenderChart();
+                    </script>
+
+                </div>
+
 
 
 
