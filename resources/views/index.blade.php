@@ -288,13 +288,12 @@
           return;
       }
 
-      let restaurantId = "R1732246184";
 
       // Example payload for the POST request
       const requestData = {
           startDate: startDate,
           endDate: endDate,
-          restaurantId: restaurantId // Replace with dynamic restaurantId if needed
+          restaurantId: "R1732246184" // Replace with dynamic restaurantId if needed
       };
 
       try {
