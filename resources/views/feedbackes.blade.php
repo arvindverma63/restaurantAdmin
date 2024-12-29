@@ -6,7 +6,7 @@
 
     <div class="app-wrapper">
         <div class="app-content pt-3 p-md-3 p-lg-4">
-            <div class="container">
+            <div class="container-xl">
                 <div class="row">
                     <!-- Feedback Details -->
                     <div class="col-md-12">
