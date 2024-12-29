@@ -21,8 +21,14 @@
                                 <a href="/till?tableNumber={{$qr['tableNumber']}}">
 
                                     <div class="card text-center" style="width: 100px; height: 100px; margin: auto;">
-                                        <div class="card-body d-flex align-items-center justify-content-center">
+                                        <div class="card-body d-flex align-items-center justify-content-center flex-column g-2">
                                             <h5 class="card-title">{{ $qr['tableNumber'] }}</h5>
+                                            <span class="badge bg-warning processing-badge border-0 rounded-pill time-forward first-item-time hide" id="first-item-time" data-table-number="{{$qr['tableNumber']}}">
+                                                <div class="spinner-border text-dark" role="status">
+                                                    <span class="visually-hidden">Loading...</span>
+                                                  </div>
+                                            </span>
+                                            </span>
                                         </div>
                                     </div>
 
@@ -49,6 +55,7 @@
     </div><!--//app-wrapper-->
     @include('partials.footer')
 
+    <script src="{{asset('assets/js/till/pos.js')}}"></script>
 </body>
 
 </html>
