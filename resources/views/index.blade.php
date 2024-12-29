@@ -233,83 +233,119 @@
                 </div>
 
                 <div class="card-container p-4 card">
-                    <canvas id="paymentTypeChart" width="400" height="200"></canvas>
+                    <div class="card-head mb-4">
+                        <div class="row">
+                            <!-- Start Date Picker -->
+                            <div class="col-md-4">
+                                <label for="startDate" class="form-label">Start Date</label>
+                                <input type="text" id="startDate" class="form-control datepicker" placeholder="Select start date">
+                            </div>
 
-                    <script>
-                        async function fetchDataAndRenderChart() {
-                            const apiUrl = 'https://rest.dicui.org/api/getReportPaymentType';
+                            <!-- End Date Picker -->
+                            <div class="col-md-4">
+                                <label for="endDate" class="form-label">End Date</label>
+                                <input type="text" id="endDate" class="form-control datepicker" placeholder="Select end date">
+                            </div>
 
-                            // Example payload for the POST request
-                            const requestData = {
-                                startDate: "2024-12-01",
-                                endDate: "2024-12-10",
-                                restaurantId: "R1732246184"
-                            };
+                            <!-- Fetch Report Button -->
+                            <div class="col-md-4 d-flex align-items-end">
+                                <button class="btn btn-primary w-100" onclick="fetchDataAndRenderChart()">Fetch Report</button>
+                            </div>
+                        </div>
+                    </div>
 
-                            try {
-                                // Fetch data from the API
-                                const response = await fetch(apiUrl, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify(requestData)
-                                });
+                    <div class="card-body">
+                        <canvas id="paymentTypeChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
 
-                                const data = await response.json();
-                                if (data.status === 'success') {
-                                    const chartData = data.data;
+                <script>
+                    // Initialize Flatpickr Date Pickers
+                    flatpickr('.datepicker', {
+                        dateFormat: 'Y-m-d', // Format: YYYY-MM-DD
+                        allowInput: true,
+                    });
 
-                                    // Extract labels and values for the chart
-                                    const labels = chartData.map(item => item.payment_type);
-                                    const totalCounts = chartData.map(item => item.total_count);
-                                    const totalAmounts = chartData.map(item => item.total_amount);
+                    async function fetchDataAndRenderChart() {
+                        const apiUrl = 'https://rest.dicui.org/api/getReportPaymentType';
 
-                                    // Render the chart
-                                    const ctx = document.getElementById('paymentTypeChart').getContext('2d');
-                                    new Chart(ctx, {
-                                        type: 'bar',
-                                        data: {
-                                            labels: labels,
-                                            datasets: [
-                                                {
-                                                    label: 'Total Transactions',
-                                                    data: totalCounts,
-                                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                                    borderColor: 'rgba(75, 192, 192, 1)',
-                                                    borderWidth: 1
-                                                },
-                                                {
-                                                    label: 'Total Amount (₹)',
-                                                    data: totalAmounts,
-                                                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                                                    borderColor: 'rgba(153, 102, 255, 1)',
-                                                    borderWidth: 1
-                                                }
-                                            ]
-                                        },
-                                        options: {
-                                            responsive: true,
-                                            scales: {
-                                                y: {
-                                                    beginAtZero: true
-                                                }
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    console.error('Failed to fetch data:', data);
-                                }
-                            } catch (error) {
-                                console.error('Error fetching data:', error);
-                            }
+                        // Get selected dates
+                        const startDate = document.getElementById('startDate').value;
+                        const endDate = document.getElementById('endDate').value;
+
+                        // Ensure dates are provided
+                        if (!startDate || !endDate) {
+                            alert('Please select both start and end dates.');
+                            return;
                         }
 
-                        // Call the function to fetch data and render the chart
-                        fetchDataAndRenderChart();
-                    </script>
+                        // Example payload for the POST request
+                        const requestData = {
+                            startDate: startDate,
+                            endDate: endDate,
+                            restaurantId: "R1732246184" // Replace with dynamic restaurantId if needed
+                        };
 
-                </div>
+                        try {
+                            // Fetch data from the API
+                            const response = await fetch(apiUrl, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(requestData)
+                            });
+
+                            const data = await response.json();
+                            if (data.status === 'success') {
+                                const chartData = data.data;
+
+                                // Extract labels and values for the chart
+                                const labels = chartData.map(item => item.payment_type);
+                                const totalCounts = chartData.map(item => item.total_count);
+                                const totalAmounts = chartData.map(item => item.total_amount);
+
+                                // Render the chart
+                                const ctx = document.getElementById('paymentTypeChart').getContext('2d');
+                                new Chart(ctx, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: labels,
+                                        datasets: [
+                                            {
+                                                label: 'Total Transactions',
+                                                data: totalCounts,
+                                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                                borderColor: 'rgba(75, 192, 192, 1)',
+                                                borderWidth: 1
+                                            },
+                                            {
+                                                label: 'Total Amount (₹)',
+                                                data: totalAmounts,
+                                                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                                                borderColor: 'rgba(153, 102, 255, 1)',
+                                                borderWidth: 1
+                                            }
+                                        ]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true
+                                            }
+                                        }
+                                    }
+                                });
+                            } else {
+                                console.error('Failed to fetch data:', data);
+                            }
+                        } catch (error) {
+                            console.error('Error fetching data:', error);
+                        }
+                    }
+                </script>
+
 
 
 
@@ -322,7 +358,7 @@
 
 
         <script type="text/javascript" src="{{ asset('assets/js/index-charts.js') }}?v={{ time() }}"></script>
-        <script src="{{asset('assets/js/index-chart-2.js')}}?v={{time()}}"></script>
+        <script src="{{ asset('assets/js/index-chart-2.js') }}?v={{ time() }}"></script>
     </div><!--//app-wrapper-->
     @include('partials.footer')
 </body>
