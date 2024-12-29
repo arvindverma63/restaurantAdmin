@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Logic\Feedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Http;
@@ -210,7 +211,7 @@ class PageController extends Controller
 
         return view('Reports.paymentTypeReport', ['data' => $reportController->paymentTypeReport()->json()]);
     }
-    public function feedbackPage(){
-        return view('components.tables.feedbackes');
+    public function feedbackPage(Feedback $feedback){
+        return view('components.tables.feedbackes',['data'=>$feedback->getFeedbacks()->json()]);
     }
 }

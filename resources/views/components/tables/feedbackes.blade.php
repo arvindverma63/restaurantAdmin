@@ -8,62 +8,45 @@
         <div class="app-content pt-3 p-md-3 p-lg-4">
             <div class="container">
                 <div class="row">
-                    <!-- Sidebar for Contacts -->
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5>Contacts</h5>
-                            </div>
-                            <div class="card-body chat-sidebar">
-                                <ul class="list-group">
-                                    <li class="list-group-item d-flex align-items-center">
-                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-3" alt="User">
-                                        <div>
-                                            <strong>John Doe</strong>
-                                            <p class="mb-0 text-muted">Hey! What's up?</p>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item d-flex align-items-center">
-                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-3" alt="User">
-                                        <div>
-                                            <strong>Jane Smith</strong>
-                                            <p class="mb-0 text-muted">Let's catch up later.</p>
-                                        </div>
-                                    </li>
-                                    <!-- Add more contacts here -->
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Chat Window -->
-                    <div class="col-md-8">
+                    <!-- Feedback Details -->
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5>Chat with John Doe</h5>
-                                <button class="btn btn-sm btn-secondary">Options</button>
+                                <h5>Customer Feedback</h5>
+                                <button class="btn btn-sm btn-secondary">Refresh</button>
                             </div>
-                            <div class="card-body chat-window">
-                                <div class="chat-message received">
-                                    <div class="d-flex">
-                                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="User">
-                                        <div>
-                                            <p class="bg-light p-2 rounded">Hey! How are you?</p>
-                                            <small class="text-muted">10:15 AM</small>
+                            <div class="card-body feedback-details">
+                                <!-- Feedback Item -->
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <img src="https://via.placeholder.com/60" class="rounded-circle me-3" alt="User">
+                                            <div>
+                                                <h6 class="mb-0">John Doe</h6>
+                                                <p class="mb-0 text-muted">1234567890 | john.doe@example.com</p>
+                                            </div>
                                         </div>
+                                        <h6>Feedback</h6>
+                                        <p class="bg-light p-2 rounded">Great service and food quality!</p>
+                                        <small class="text-muted">Date: 2024-12-01 10:15 AM</small>
                                     </div>
                                 </div>
-                                <div class="chat-message sent text-end">
-                                    <p class="bg-primary text-white p-2 rounded">I'm good, how about you?</p>
-                                    <small class="text-muted">10:16 AM</small>
+
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <img src="https://via.placeholder.com/60" class="rounded-circle me-3" alt="User">
+                                            <div>
+                                                <h6 class="mb-0">Jane Smith</h6>
+                                                <p class="mb-0 text-muted">9876543210 | jane.smith@example.com</p>
+                                            </div>
+                                        </div>
+                                        <h6>Feedback</h6>
+                                        <p class="bg-light p-2 rounded">Loved the ambiance!</p>
+                                        <small class="text-muted">Date: 2024-12-02 02:25 PM</small>
+                                    </div>
                                 </div>
-                                <!-- Add more chat messages here -->
-                            </div>
-                            <div class="card-footer">
-                                <form id="chatForm" class="d-flex">
-                                    <input type="text" class="form-control me-2" placeholder="Type a message..." required>
-                                    <button type="submit" class="btn btn-primary">Send</button>
-                                </form>
+                                <!-- Add more feedback items here -->
                             </div>
                         </div>
                     </div>
@@ -76,22 +59,21 @@
 
     <!-- Add custom styles -->
     <style>
-        .chat-sidebar {
-            height: 70vh;
-            overflow-y: auto;
-        }
-        .chat-window {
-            height: 60vh;
+        .feedback-details {
+            height: auto;
             overflow-y: auto;
             background-color: #f8f9fa;
             padding: 10px;
         }
-        .chat-message {
-            margin-bottom: 15px;
+        .card-body img {
+            width: 60px;
+            height: 60px;
         }
-        .chat-message p {
-            display: inline-block;
-            max-width: 75%;
+        .card-body {
+            padding: 1.5rem;
+            background: #fff;
+            border-radius: 0.5rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
     </style>
 </body>
