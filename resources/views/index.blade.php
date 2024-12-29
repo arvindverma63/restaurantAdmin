@@ -256,10 +256,11 @@
 
                     <div class="card-body">
                         <canvas id="paymentTypeChart" width="400" height="200"></canvas>
+                        <script src="{{asset('assets/js/till/payment.js')}}?v={{time()}}"></script>
                     </div>
                 </div>
 
-                <script src="{{asset('assets/js/till/payment.js')}}?v={{time()}}"></script>
+
 
 
 

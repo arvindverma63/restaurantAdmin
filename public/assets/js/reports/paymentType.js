@@ -29,14 +29,7 @@
           return;
       }
 
-      let restaurantId;
-
-      fetch('/getAuth')
-      .then(response=>response.json())
-      .then(data=>{
-        console.log(data);
-        restaurantId = data.restaurantId;
-      });
+      let restaurantId = "R1732246184";
 
       // Example payload for the POST request
       const requestData = {
