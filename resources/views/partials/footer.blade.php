@@ -1,13 +1,12 @@
-<!-- Javascript -->
-<script src="assets/plugins/popper.min.js"></script>
-<script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="{{ asset('assets/plugins/popper.min.js') }}?v={{ time() }}"></script>
+    <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}?v={{ time() }}"></script>
 
-<!-- Charts JS -->
-<script src="assets/plugins/chart.js/chart.min.js"></script>
-<script src="assets/js/index-charts.js"></script>
+    <!-- Charts JS -->
+    <script src="{{ asset('assets/plugins/chart.js/chart.min.js') }}?v={{ time() }}"></script>
+    <script src="{{ asset('assets/js/index-charts.js') }}?v={{ time() }}"></script>
 
-<!-- Page Specific JS -->
-<script src="assets/js/app.js"></script>
+    <!-- Page Specific JS -->
+    <script src="{{ asset('assets/js/app.js') }}?v={{ time() }}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- DataTables JS -->
 <!-- DataTables JS -->
@@ -50,7 +49,7 @@
                     action: function(e, dt, button, config) {
                         // Get the current order of the table
                         var currentOrder = dt.order();
-                        
+
                         // Reverse the order
                         if (currentOrder[0][0] === 0) {
                             // If it is already in descending order, change to ascending
