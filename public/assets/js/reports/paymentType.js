@@ -29,6 +29,14 @@
           return;
       }
 
+      let restaurantId;
+
+      fetch('/getAuth')
+      .then(response=>response.json())
+      .then(data=>{
+        restaurantId = data.restaurantId;
+      });
+
       // Example payload for the POST request
       const requestData = {
           startDate: startDate,
