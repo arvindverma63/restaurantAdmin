@@ -212,6 +212,6 @@ class PageController extends Controller
         return view('Reports.paymentTypeReport', ['data' => $reportController->paymentTypeReport()->json()]);
     }
     public function feedbackPage(Feedback $feedback){
-        return view('components.tables.feedbackes',['data'=>$feedback->getFeedbacks()->json()]);
+        return view('feedbackes',['data'=>$feedback->getFeedbacks()->json()]);
     }
 }
