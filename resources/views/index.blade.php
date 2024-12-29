@@ -232,7 +232,7 @@
 
                 </div>
 
-                <div class="card-container p-4">
+                <div class="card-container p-4 card">
                     <canvas id="paymentTypeChart" width="400" height="200"></canvas>
 
                     <script>
