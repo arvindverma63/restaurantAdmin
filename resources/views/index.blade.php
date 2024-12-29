@@ -243,7 +243,7 @@
                             const requestData = {
                                 startDate: "2024-12-01",
                                 endDate: "2024-12-10",
-                                restaurantId: 123
+                                restaurantId: "R1732246184"
                             };
 
                             try {
