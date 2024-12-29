@@ -260,9 +260,20 @@
                 </div>
 
                 <script>
-                    // Initialize Flatpickr Date Pickers
-                    flatpickr('.datepicker', {
+                    // Initialize Flatpickr Date Pickers with Default Dates
+                    const today = new Date();
+                    const oneWeekAgo = new Date();
+                    oneWeekAgo.setDate(today.getDate() - 7);
+
+                    flatpickr('#startDate', {
                         dateFormat: 'Y-m-d', // Format: YYYY-MM-DD
+                        defaultDate: oneWeekAgo, // Set default date to 1 week ago
+                        allowInput: true,
+                    });
+
+                    flatpickr('#endDate', {
+                        dateFormat: 'Y-m-d', // Format: YYYY-MM-DD
+                        defaultDate: today, // Set default date to today
                         allowInput: true,
                     });
 
