@@ -238,13 +238,13 @@
                             <!-- Start Date Picker -->
                             <div class="col-md-4">
                                 <label for="startDate" class="form-label">Start Date</label>
-                                <input type="text" id="startDate" class="form-control datepicker" placeholder="Select start date">
+                                <input type="date" id="startDate" class="form-control datepicker" placeholder="Select start date">
                             </div>
 
                             <!-- End Date Picker -->
                             <div class="col-md-4">
                                 <label for="endDate" class="form-label">End Date</label>
-                                <input type="text" id="endDate" class="form-control datepicker" placeholder="Select end date">
+                                <input type="date" id="endDate" class="form-control datepicker" placeholder="Select end date">
                             </div>
 
                             <!-- Fetch Report Button -->
